@@ -44,6 +44,8 @@ class DBProvider {
     }
   }
 
+  Future close() async => database.close();
+
   Future<List<Product>> getProducts() async {
     List<Map<String, dynamic>> maps = await database.query(
       TABLE_PRODUCT,
