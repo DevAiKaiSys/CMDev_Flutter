@@ -19,7 +19,7 @@ class DBProvider {
 
       database = await openDatabase(
         path,
-        version: 1,
+        version: 2,
         onCreate: (Database db, int version) async {
           print("Database Create");
           String sql = "CREATE TABLE $TABLE_PRODUCT ("
@@ -30,11 +30,24 @@ class DBProvider {
               ")";
           await db.execute(sql);
         },
-        onUpgrade: (Database db, int oldVersion, int newVersion) {
+        onUpgrade: (Database db, int oldVersion, int newVersion) async {
           print("Database oldVersion: $oldVersion, newVersion $newVersion");
+          String sql = "CREATE TABLE SHOP ("
+              "id INTEGER PRIMARY KEY,"
+              "name TEXT"
+              ")";
+          await db.execute(sql);
+          print("Upgrade succeeded");
         },
         onOpen: (Database db) async {
           print("Database version: ${await db.getVersion()}");
+        },
+        onDowngrade: (db, oldVersion, newVersion) async {
+          print(
+              "Database oldVersion: $oldVersion, downgradeVersion $newVersion");
+          String sql = "DROP TABLE SHOP";
+          await db.execute(sql);
+          print("Downgrade succeeded");
         },
       );
 
