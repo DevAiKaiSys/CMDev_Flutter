@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'My SQLite',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -64,8 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("MY SQLite"),
         actions: [
           IconButton(
-            onPressed: () {},
             icon: Icon(Icons.delete),
+            onPressed: () {
+              _refresh.currentState?.show();
+              dbProvider.deleteAll();
+            },
           ),
         ],
       );
@@ -107,11 +111,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 editDialog(product);
               },
             ),
-            title: Text("${product.name}. (${product.stock})"),
+            title: Text("${product.name} (${product.stock})"),
             subtitle: Text("price: ${product.price}"),
             trailing: IconButton(
               icon: Icon(Icons.clear),
-              onPressed: () {},
+              onPressed: () async {
+                _refresh.currentState?.show();
+                dbProvider.deleteProduct(product.id!);
+                await Future.delayed(Duration(seconds: 2));
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("Item deleted"),
+                  action: SnackBarAction(
+                      label: "UNDO",
+                      onPressed: () {
+                        _refresh.currentState?.show();
+                        dbProvider
+                            .insertProduct(product)
+                            .then((value) => print(value));
+                      }),
+                ));
+              },
             ),
           );
         },
