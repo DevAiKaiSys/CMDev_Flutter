@@ -19,14 +19,14 @@ class DBProvider {
 
       database = await openDatabase(
         path,
-        version: 2,
+        version: 1,
         onCreate: (Database db, int version) async {
           print("Database Create");
           String sql = "CREATE TABLE $TABLE_PRODUCT ("
               "$COLUMN_ID INTEGER PRIMARY KEY,"
               "$COLUMN_NAME TEXT,"
-              "$COLUMN_PRICE INTEGER,"
-              "$COLUMN_STOCK REAL"
+              "$COLUMN_PRICE REAL,"
+              "$COLUMN_STOCK INTEGER"
               ")";
           await db.execute(sql);
         },

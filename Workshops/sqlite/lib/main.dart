@@ -53,7 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: _buildBody(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          createDialog();
+        },
       ),
     );
   }
@@ -76,21 +78,22 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {});
       },
       child: FutureBuilder(
-          future: dbProvider.getProducts(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<Product> products = snapshot.data as List<Product>;
-              if (products.length > 0) {
-                return _buildListView(products.reversed.toList());
-              }
-              return Center(
-                child: Text("NO DATA"),
-              );
+        future: dbProvider.getProducts(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Product> products = snapshot.data as List<Product>;
+            if (products.length > 0) {
+              return _buildListView(products.reversed.toList());
             }
             return Center(
-              child: CircularProgressIndicator(),
+              child: Text("NO DATA"),
             );
-          }),
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
     );
   }
 
@@ -100,7 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
           return ListTile(
             leading: IconButton(
               icon: Icon(Icons.edit),
-              onPressed: () {},
+              onPressed: () {
+                editDialog(product);
+              },
             ),
             title: Text("${product.name}. (${product.stock})"),
             subtitle: Text("price: ${product.price}"),
@@ -129,4 +134,114 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         },
       );
+
+  createDialog() {
+    var _formKey = GlobalKey<FormState>();
+    Product product = Product();
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(hintText: "name"),
+                    onSaved: (value) {
+                      product.name = value;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(hintText: "price"),
+                    onSaved: (value) {
+                      product.price = double.parse(value!);
+                    },
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(hintText: "stock"),
+                    onSaved: (value) {
+                      product.stock = int.parse(value!);
+                    },
+                  ),
+                  SizedBox(height: 15),
+                  SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        child: Text("Submit"),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState?.save();
+                            _refresh.currentState?.show();
+                            Navigator.pop(context);
+                            dbProvider
+                                .insertProduct(product)
+                                .then((value) => print(value));
+                          }
+                        },
+                      ))
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  editDialog(Product product) {
+    var _formKey = GlobalKey<FormState>();
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    initialValue: product.name,
+                    decoration: InputDecoration(hintText: "name"),
+                    onSaved: (value) {
+                      product.name = value;
+                    },
+                  ),
+                  TextFormField(
+                    initialValue: product.price.toString(),
+                    decoration: InputDecoration(hintText: "price"),
+                    onSaved: (value) {
+                      product.price = double.parse(value!);
+                    },
+                  ),
+                  TextFormField(
+                    initialValue: product.stock.toString(),
+                    decoration: InputDecoration(hintText: "stock"),
+                    onSaved: (value) {
+                      product.stock = int.parse(value!);
+                    },
+                  ),
+                  SizedBox(height: 15),
+                  SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        child: Text("Submit"),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState?.save();
+                            _refresh.currentState?.show();
+                            Navigator.pop(context);
+                            dbProvider
+                                .updateProduct(product)
+                                .then((row) => print(row));
+                          }
+                        },
+                      ))
+                ],
+              ),
+            ),
+          );
+        });
+  }
 }
