@@ -1,30 +1,23 @@
-import 'package:bloc_state/src/app_route.dart';
 import 'package:bloc_state/src/bloc/counter_a_bloc/counter_a_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class AnotherPage extends StatefulWidget {
+  const AnotherPage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<AnotherPage> createState() => _AnotherPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _AnotherPageState extends State<AnotherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
-        actions: [
-          IconButton(
-            onPressed: () => Navigator.pushNamed(context, AppRoute.another),
-            icon: Icon(Icons.navigate_next),
-          )
-        ],
       ),
       body: Center(
         child: Column(
@@ -48,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            heroTag: 'a1',
+            heroTag: 'b1',
             onPressed: () =>
                 context.read<CounterABloc>().add(CounterAEventReset()),
             tooltip: 'Reset',
@@ -56,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           SizedBox(height: 10),
           FloatingActionButton(
-            heroTag: 'a2',
+            heroTag: 'b2',
             onPressed: () =>
                 context.read<CounterABloc>().add(CounterAEventAdd()),
             tooltip: 'Add',
