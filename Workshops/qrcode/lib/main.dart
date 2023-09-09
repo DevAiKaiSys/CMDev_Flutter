@@ -30,13 +30,14 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(title),
       ),
       body: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(30),
             child: Image.asset(
               'assets/banner.jpg',
               fit: BoxFit.cover,
@@ -59,33 +60,51 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  _buildScan() => Column(
-        children: [
-          Image.asset(
-            "assets/ic_scan_qrcode.png",
-            width: 110,
-            height: 110,
-          ),
-          SizedBox(height: 10),
-          ElevatedButton(
-            child: Text("SCAN"),
-            onPressed: () {},
-          )
-        ],
+  _buildScan() => Expanded(
+        flex: 1,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              "assets/ic_scan_qrcode.png",
+              width: 110,
+              height: 110,
+            ),
+            SizedBox(height: 15),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+              ),
+              child: Text("SCAN"),
+              onPressed: () {},
+            )
+          ],
+        ),
       );
 
-  _buildGenerator() => Column(
-        children: [
-          Image.asset(
-            "assets/ic_generate_qrcode.png",
-            width: 110,
-            height: 110,
-          ),
-          SizedBox(height: 10),
-          ElevatedButton(
-            child: Text("GENERATE"),
-            onPressed: () {},
-          )
-        ],
+  _buildGenerator() => Expanded(
+        flex: 1,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              "assets/ic_generate_qrcode.png",
+              width: 110,
+              height: 110,
+            ),
+            SizedBox(height: 15),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.tealAccent[700],
+                foregroundColor: Colors.white,
+              ),
+              child: Text("GENERATE"),
+              onPressed: () {},
+            )
+          ],
+        ),
       );
 }
