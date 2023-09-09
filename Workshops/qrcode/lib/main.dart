@@ -1,6 +1,7 @@
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qrcode/generate_qrcode_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,7 +53,7 @@ class MyHomePage extends StatelessWidget {
                 children: [
                   _buildScan(context: context),
                   SizedBox(width: 30),
-                  _buildGenerator()
+                  _buildGenerator(context: context)
                 ],
               ),
             ),
@@ -88,29 +89,39 @@ class MyHomePage extends StatelessWidget {
         ),
       );
 
-  _buildGenerator() => Expanded(
-        flex: 1,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              "assets/ic_generate_qrcode.png",
-              width: 110,
-              height: 110,
+  _buildGenerator({required BuildContext context}) {
+    final text = "GENERATE";
+
+    return Expanded(
+      flex: 1,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            "assets/ic_generate_qrcode.png",
+            width: 110,
+            height: 110,
+          ),
+          SizedBox(height: 15),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.tealAccent[700],
+              foregroundColor: Colors.white,
             ),
-            SizedBox(height: 15),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.tealAccent[700],
-                foregroundColor: Colors.white,
-              ),
-              child: Text("GENERATE"),
-              onPressed: () {},
-            )
-          ],
-        ),
-      );
+            child: Text(text),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GenerateQRCodePage(title: text),
+                  ));
+            },
+          )
+        ],
+      ),
+    );
+  }
 
   Future scanQRCode({required BuildContext context}) async {
     try {
