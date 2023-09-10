@@ -45,5 +45,10 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<key>NSCameraUsageDescription</key>
+        <string>เปิดกล้อง เพื่ออัปโหลดรูปภาพ</string>
+        <key>NSPhotoLibraryAddUsageDescription</key>
+        <string>เปิดคลังภาพ เพื่อเพิ่มรูปภาพ</string>
 </dict>
 </plist>
