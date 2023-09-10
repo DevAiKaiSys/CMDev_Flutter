@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class GenerateQRCodePage extends StatefulWidget {
@@ -40,7 +41,10 @@ class _GenerateQRCodePageState extends State<GenerateQRCodePage> {
     );
   }
 
-  void shared() {}
+  void shared() {
+    final channel = MethodChannel('cm.share/share');
+    channel.invokeMethod('shareFile', 'image.png');
+  }
 
   _buildContent() => Padding(
         padding: EdgeInsets.only(left: 30, right: 30, top: 40),
@@ -49,7 +53,7 @@ class _GenerateQRCodePageState extends State<GenerateQRCodePage> {
             TextField(
               controller: _textController,
               decoration: InputDecoration(
-                  hintText: "Enter the text to create the qe code"),
+                  hintText: 'Enter the text to create the qe code'),
             ),
             SizedBox(height: 40),
             QrImageView(
