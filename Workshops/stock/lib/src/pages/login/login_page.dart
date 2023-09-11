@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stock/src/config/theme.dart' as custom_theme;
 import 'package:stock/src/pages/login/widgets/header.dart';
+import 'package:stock/src/pages/login/widgets/login_form.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -26,15 +27,7 @@ class _LoginPageState extends State<LoginPage> {
           Column(
             children: [
               Header(),
-              IconButton(
-                icon: FaIcon(
-                  FontAwesomeIcons.gamepad,
-                  color: Colors.amber,
-                ),
-                onPressed: () {
-                  print("Pressed");
-                },
-              ),
+              LoginForm(),
               Text('forgot password'),
               Text('SSO'),
               Text('register'),
