@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stock/src/config/theme.dart' as custom_theme;
+import 'package:stock/src/utils/RegexValidator.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -12,6 +13,9 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   late TextEditingController usernameController;
   late TextEditingController passwordController;
+
+  String? _errorUsername;
+  String? _errorPassword;
 
   @override
   void initState() {
@@ -51,8 +55,11 @@ class _LoginFormState extends State<LoginForm> {
           padding: const EdgeInsets.only(
               top: 20.0, bottom: 58.0, left: 28.0, right: 28.0),
           child: FormInput(
-              usernameController: usernameController,
-              passwordController: passwordController),
+            usernameController: usernameController,
+            passwordController: passwordController,
+            errorUsername: _errorUsername,
+            errorPassword: _errorPassword,
+          ),
         ),
       );
 
@@ -62,8 +69,29 @@ class _LoginFormState extends State<LoginForm> {
         decoration: _boxDecoration(),
         child: TextButton(
           onPressed: () {
-            print(usernameController.text);
-            print(passwordController.text);
+            String username = usernameController.text;
+            String password = passwordController.text;
+
+            _errorUsername = null;
+            _errorPassword = null;
+
+            if (!EmailSubmitRegexValidator().isValid(username)) {
+              _errorUsername = 'The Email mute be a valid email.';
+            }
+
+            if (password.length < 8) {
+              _errorPassword = 'Mute be at least 8 characters.';
+            }
+
+            if (_errorUsername == null && _errorPassword == null) {
+              // print('form valid');
+              setState(() {});
+            } else {
+              // print('form invalid');
+              setState(() {});
+            }
+            // print(usernameController.text);
+            // print(passwordController.text);
           },
           child: Text(
             'LOGIN',
@@ -115,11 +143,15 @@ class _LoginFormState extends State<LoginForm> {
 class FormInput extends StatefulWidget {
   final TextEditingController usernameController;
   final TextEditingController passwordController;
+  final String? errorUsername;
+  final String? errorPassword;
 
   const FormInput({
     super.key,
     required this.usernameController,
     required this.passwordController,
+    required this.errorUsername,
+    required this.errorPassword,
   });
 
   @override
@@ -183,6 +215,7 @@ class _FormInputState extends State<FormInput> {
             size: 22.0,
             color: _color,
           ),
+          errorText: widget.errorPassword,
         ),
         obscureText: true,
       );
@@ -200,6 +233,7 @@ class _FormInputState extends State<FormInput> {
             size: 22.0,
             color: _color,
           ),
+          errorText: widget.errorUsername,
         ),
       );
 }
