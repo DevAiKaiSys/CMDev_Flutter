@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stock/src/config/theme.dart' as custom_theme;
+import 'package:stock/src/pages/login/widgets/header.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,11 +18,13 @@ class _LoginPageState extends State<LoginPage> {
         fit: StackFit.expand,
         children: [
           Container(
-            decoration: BoxDecoration(gradient: custom_theme.Theme.gradient),
+            decoration: BoxDecoration(
+              gradient: custom_theme.Theme.gradient,
+            ),
           ),
           Column(
             children: [
-              Text('header'),
+              Header(),
               Text('form'),
               Text('forgot password'),
               Text('SSO'),
