@@ -2,8 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stock/src/config/theme.dart' as custom_theme;
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  late TextEditingController usernameController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    usernameController = TextEditingController();
+    passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    usernameController?.dispose();
+    passwordController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +50,9 @@ class LoginForm extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(
               top: 20.0, bottom: 58.0, left: 28.0, right: 28.0),
-          child: FormInput(),
+          child: FormInput(
+              usernameController: usernameController,
+              passwordController: passwordController),
         ),
       );
 
@@ -37,7 +61,10 @@ class LoginForm extends StatelessWidget {
         height: 50,
         decoration: _boxDecoration(),
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            print(usernameController.text);
+            print(passwordController.text);
+          },
           child: Text(
             'LOGIN',
             style: TextStyle(
@@ -85,12 +112,43 @@ class LoginForm extends StatelessWidget {
   }
 }
 
-class FormInput extends StatelessWidget {
-  final _color = Colors.black54;
+class FormInput extends StatefulWidget {
+  final TextEditingController usernameController;
+  final TextEditingController passwordController;
 
   const FormInput({
     super.key,
+    required this.usernameController,
+    required this.passwordController,
   });
+
+  @override
+  State<FormInput> createState() => _FormInputState();
+}
+
+class _FormInputState extends State<FormInput> {
+  final _color = Colors.black54;
+
+  // // final usernameController = TextEditingController();
+  // late TextEditingController usernameController;
+  // late TextEditingController passwordController;
+  //
+  // @override
+  // void initState() {
+  //   usernameController = TextEditingController();
+  //   passwordController = TextEditingController();
+  //   super.initState();
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   // if (usernameController != null) {
+  //   //   usernameController.dispose();
+  //   // }
+  //   usernameController?.dispose();
+  //   passwordController?.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +172,8 @@ class FormInput extends StatelessWidget {
       );
 
   TextField _buildPassword() => TextField(
+        // controller: passwordController,
+        controller: widget.passwordController,
         decoration: InputDecoration(
           border: InputBorder.none,
           labelText: 'Password',
@@ -128,6 +188,8 @@ class FormInput extends StatelessWidget {
       );
 
   TextField _buildUsername() => TextField(
+        // controller: usernameController,
+        controller: widget.usernameController,
         decoration: InputDecoration(
           border: InputBorder.none,
           labelText: 'Email Address',
