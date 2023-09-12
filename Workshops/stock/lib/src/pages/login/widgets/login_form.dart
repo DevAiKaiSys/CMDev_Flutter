@@ -1,7 +1,9 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stock/src/config/theme.dart' as custom_theme;
+import 'package:stock/src/constants/setting.dart';
 import 'package:stock/src/pages/home/home_page.dart';
 import 'package:stock/src/utils/RegexValidator.dart';
 import 'package:stock/src/config/route.dart' as custom_route;
@@ -159,7 +161,7 @@ class _LoginFormState extends State<LoginForm> {
     if (_errorUsername == null && _errorPassword == null) {
       // print('form valid');
       showLoading();
-      Future.delayed(Duration(seconds: 2)).then((value) {
+      Future.delayed(Duration(seconds: 2)).then((value) async {
         Navigator.pop(context);
         if (username == 'dev@mail.com' && password == '12345678') {
           // print('login successfuly.');
@@ -173,11 +175,16 @@ class _LoginFormState extends State<LoginForm> {
           //     ),
           //   ),
           // );
-          Navigator.pushReplacementNamed(
-            context,
-            custom_route.Route.home,
-            arguments: {'name': 'aikaisys', 'age': 30},
-          );
+          // Navigator.pushReplacementNamed(
+          //   context,
+          //   custom_route.Route.home,
+          //   arguments: {'name': 'aikaisys', 'age': 30},
+          // );
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(Setting.TOKEN_PREF, 'value');
+          prefs.setString(Setting.USERNAME_PREF, username);
+
+          Navigator.pushReplacementNamed(context, custom_route.Route.home);
         } else {
           showAlertBar();
         }
