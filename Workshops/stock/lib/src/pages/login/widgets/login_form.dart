@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stock/src/config/theme.dart' as custom_theme;
 import 'package:stock/src/pages/home/home_page.dart';
 import 'package:stock/src/utils/RegexValidator.dart';
+import 'package:stock/src/config/route.dart' as custom_route;
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -163,14 +164,19 @@ class _LoginFormState extends State<LoginForm> {
         if (username == 'dev@mail.com' && password == '12345678') {
           // print('login successfuly.');
           // Navigator.push(
-          Navigator.pushReplacement(
+          // Navigator.pushReplacement(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => HomePage(
+          //       name: 'aikaisys',
+          //       age: 30,
+          //     ),
+          //   ),
+          // );
+          Navigator.pushReplacementNamed(
             context,
-            MaterialPageRoute(
-              builder: (context) => HomePage(
-                name: 'aikaisys',
-                age: 30,
-              ),
-            ),
+            custom_route.Route.home,
+            arguments: {'name': 'aikaisys', 'age': 30},
           );
         } else {
           showAlertBar();
