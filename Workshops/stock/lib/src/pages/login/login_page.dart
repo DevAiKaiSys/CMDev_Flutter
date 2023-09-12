@@ -25,17 +25,46 @@ class _LoginPageState extends State<LoginPage> {
               gradient: custom_theme.Theme.gradient,
             ),
           ),
-          Column(
-            children: [
-              Header(),
-              LoginForm(),
-              Text('forgot password'),
-              SingleSignOn(),
-              Text('register'),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Header(),
+                LoginForm(),
+                SizedBox(height: 30),
+                _buildTextButton(
+                  'Forgot Password?',
+                  onPressed: () {
+                    //todo
+                  },
+                ),
+                SingleSignOn(),
+                SizedBox(height: 30),
+                _buildTextButton(
+                  "Don't have an Account",
+                  onPressed: () {
+                    //todo
+                  },
+                ),
+                SizedBox(height: 80),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
+
+  TextButton _buildTextButton(String text,
+          {VoidCallback? onPressed, double fontSize = 16}) =>
+      TextButton(
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: fontSize,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
+      );
 }
