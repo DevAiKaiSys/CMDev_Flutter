@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stock/src/constants/asset.dart';
+import 'package:stock/src/pages/home/widgets/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
   // const HomePage({super.key, this.name = '-', this.age = 0});
@@ -31,26 +32,31 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       // body: Image.asset('assets/images/logo.png'),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextButton(
-            onPressed: () {
-              if (Navigator.canPop(context)) {
-                Navigator.pop(context);
-              }
-            },
-            child: Text('back'),
-          ),
-          // Text(widget.name),
-          // Text(widget.age.toString()),
-          // Text(name),
-          // Text(age.toString()),
-          Image.asset(Asset.LOGO_IMAGE),
-          Image.network(
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Google-flutter-logo.svg/1920px-Google-flutter-logo.svg.png'),
-        ],
+      // body: Column(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     TextButton(
+      //       onPressed: () {
+      //         if (Navigator.canPop(context)) {
+      //           Navigator.pop(context);
+      //         }
+      //       },
+      //       child: Text('back'),
+      //     ),
+      //     // Text(widget.name),
+      //     // Text(widget.age.toString()),
+      //     // Text(name),
+      //     // Text(age.toString()),
+      //     Image.asset(Asset.LOGO_IMAGE),
+      //     Image.network(
+      //         'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Google-flutter-logo.svg/1920px-Google-flutter-logo.svg.png'),
+      //   ],
+      // ),
+      appBar: AppBar(
+        title: Text('Stock Workshop'),
       ),
+      drawer: CustomDrawer(),
+      body: Image.asset(Asset.LOGO_IMAGE),
     );
   }
 }
