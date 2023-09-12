@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stock/src/config/theme.dart' as custom_theme;
+import 'package:stock/src/pages/home/home_page.dart';
 import 'package:stock/src/utils/RegexValidator.dart';
 
 class LoginForm extends StatefulWidget {
@@ -160,7 +161,17 @@ class _LoginFormState extends State<LoginForm> {
       Future.delayed(Duration(seconds: 2)).then((value) {
         Navigator.pop(context);
         if (username == 'dev@mail.com' && password == '12345678') {
-          print('login successfuly.');
+          // print('login successfuly.');
+          // Navigator.push(
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(
+                name: 'aikaisys',
+                age: 30,
+              ),
+            ),
+          );
         } else {
           showAlertBar();
         }
