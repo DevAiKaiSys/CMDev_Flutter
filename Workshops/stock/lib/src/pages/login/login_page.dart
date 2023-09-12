@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stock/src/config/theme.dart' as custom_theme;
 import 'package:stock/src/pages/login/widgets/header.dart';
 import 'package:stock/src/pages/login/widgets/login_form.dart';
+import 'package:stock/src/pages/login/widgets/single_sign_on.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
               Header(),
               LoginForm(),
               Text('forgot password'),
-              Text('SSO'),
+              SingleSignOn(),
               Text('register'),
             ],
           ),
