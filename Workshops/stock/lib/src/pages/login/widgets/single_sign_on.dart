@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stock/src/viewmodels/single_sign_on_view_model.dart';
 
 class SingleSignOn extends StatelessWidget {
   const SingleSignOn({super.key});
@@ -6,7 +8,11 @@ class SingleSignOn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [_buildDivider()],
+      children: [
+        _buildDivider(),
+        SizedBox(height: 12),
+        _buildSingleSignOnButton(),
+      ],
     );
   }
 
@@ -67,4 +73,62 @@ class SingleSignOn extends StatelessWidget {
       ],
     );
   }
+
+  Padding _buildSingleSignOnButton() => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children:
+              // [
+              //   FloatingActionButton(
+              //     heroTag: "aaaa",
+              //     backgroundColor: Colors.black,
+              //     onPressed: () {},
+              //     child: FaIcon(
+              //       FontAwesomeIcons.apple,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              //   FloatingActionButton(
+              //     heroTag: "aaaa",
+              //     backgroundColor: Colors.red,
+              //     onPressed: () {},
+              //     child: FaIcon(
+              //       FontAwesomeIcons.google,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              //   FloatingActionButton(
+              //     heroTag: "aaaa",
+              //     backgroundColor: Colors.blue,
+              //     onPressed: () {},
+              //     child: FaIcon(
+              //       FontAwesomeIcons.facebookF,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              //   FloatingActionButton(
+              //     heroTag: "aaaa",
+              //     backgroundColor: Colors.green,
+              //     onPressed: () {},
+              //     child: FaIcon(
+              //       FontAwesomeIcons.line,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              // ],
+              SingleSignOnViewModel()
+                  .items
+                  .map((item) => FloatingActionButton(
+                        heroTag: item.icon.toString(),
+                        onPressed: item.onPress,
+                        backgroundColor: item.backgroundColor,
+                        child: FaIcon(
+                          item.icon,
+                          color: Colors.white,
+                        ),
+                      ))
+                  .toList(),
+        ),
+      );
 }
