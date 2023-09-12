@@ -69,40 +69,7 @@ class _LoginFormState extends State<LoginForm> {
         height: 50,
         decoration: _boxDecoration(),
         child: TextButton(
-          onPressed: () {
-            String username = usernameController.text;
-            String password = passwordController.text;
-
-            _errorUsername = null;
-            _errorPassword = null;
-
-            if (!EmailSubmitRegexValidator().isValid(username)) {
-              _errorUsername = 'The Email mute be a valid email.';
-            }
-
-            if (password.length < 8) {
-              _errorPassword = 'Mute be at least 8 characters.';
-            }
-
-            if (_errorUsername == null && _errorPassword == null) {
-              // print('form valid');
-              showLoading();
-              Future.delayed(Duration(seconds: 2)).then((value) {
-                Navigator.pop(context);
-                if (username == 'dev@mail.com' && password == '12345678') {
-                  print('login successfuly.');
-                } else {
-                  showAlertBar();
-                }
-              });
-              setState(() {});
-            } else {
-              // print('form invalid');
-              setState(() {});
-            }
-            // print(usernameController.text);
-            // print(passwordController.text);
-          },
+          onPressed: _onLogin,
           child: Text(
             'LOGIN',
             style: TextStyle(
@@ -171,6 +138,41 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   }
+
+  void _onLogin() {
+    String username = usernameController.text;
+    String password = passwordController.text;
+
+    _errorUsername = null;
+    _errorPassword = null;
+
+    if (!EmailSubmitRegexValidator().isValid(username)) {
+      _errorUsername = 'The Email mute be a valid email.';
+    }
+
+    if (password.length < 8) {
+      _errorPassword = 'Mute be at least 8 characters.';
+    }
+
+    if (_errorUsername == null && _errorPassword == null) {
+      // print('form valid');
+      showLoading();
+      Future.delayed(Duration(seconds: 2)).then((value) {
+        Navigator.pop(context);
+        if (username == 'dev@mail.com' && password == '12345678') {
+          print('login successfuly.');
+        } else {
+          showAlertBar();
+        }
+      });
+      setState(() {});
+    } else {
+      // print('form invalid');
+      setState(() {});
+    }
+    // print(usernameController.text);
+    // print(passwordController.text);
+  }
 }
 
 class FormInput extends StatefulWidget {
@@ -193,6 +195,15 @@ class FormInput extends StatefulWidget {
 
 class _FormInputState extends State<FormInput> {
   final _color = Colors.black54;
+
+  late bool _obscureTextPassword;
+  final _passwordFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    _obscureTextPassword = true;
+    super.initState();
+  }
 
   // // final usernameController = TextEditingController();
   // late TextEditingController usernameController;
@@ -237,6 +248,7 @@ class _FormInputState extends State<FormInput> {
       );
 
   TextField _buildPassword() => TextField(
+        focusNode: _passwordFocusNode,
         // controller: passwordController,
         controller: widget.passwordController,
         decoration: InputDecoration(
@@ -249,8 +261,22 @@ class _FormInputState extends State<FormInput> {
             color: _color,
           ),
           errorText: widget.errorPassword,
+          suffixIcon: IconButton(
+            icon: FaIcon(
+              _obscureTextPassword
+                  ? FontAwesomeIcons.eye
+                  : FontAwesomeIcons.eyeSlash,
+              color: _color,
+              size: 15.0,
+            ),
+            onPressed: () {
+              setState(() {
+                _obscureTextPassword = !_obscureTextPassword;
+              });
+            },
+          ),
         ),
-        obscureText: true,
+        obscureText: _obscureTextPassword,
       );
 
   TextField _buildUsername() => TextField(
@@ -268,5 +294,10 @@ class _FormInputState extends State<FormInput> {
           ),
           errorText: widget.errorUsername,
         ),
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+        onSubmitted: (String value) {
+          FocusScope.of(context).requestFocus(_passwordFocusNode);
+        },
       );
 }
