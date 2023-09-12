@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stock/src/config/theme.dart' as custom_theme;
@@ -85,6 +86,15 @@ class _LoginFormState extends State<LoginForm> {
 
             if (_errorUsername == null && _errorPassword == null) {
               // print('form valid');
+              showLoading();
+              Future.delayed(Duration(seconds: 2)).then((value) {
+                Navigator.pop(context);
+                if (username == 'dev@mail.com' && password == '12345678') {
+                  print('login successfuly.');
+                } else {
+                  showAlertBar();
+                }
+              });
               setState(() {});
             } else {
               // print('form invalid');
@@ -103,6 +113,29 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ),
       );
+
+  Flushbar<dynamic> showAlertBar() => Flushbar(
+        title: 'Username or Password is incorrect',
+        message: 'Please try again',
+        icon: Icon(
+          Icons.error,
+          size: 28.0,
+          color: Colors.red,
+        ),
+        duration: Duration(seconds: 3),
+        // leftBarIndicatorColor: Colors.blue[300], // ช่องทางซ้าย
+        margin: EdgeInsets.all(8),
+        borderRadius: BorderRadius.circular(8),
+      )..show(context);
+
+  void showLoading() {
+    Flushbar(
+      message: 'Loading...',
+      showProgressIndicator: true,
+      flushbarPosition: FlushbarPosition.TOP,
+      flushbarStyle: FlushbarStyle.GROUNDED,
+    )..show(context);
+  }
 
   BoxDecoration _boxDecoration() {
     final gradientStart = custom_theme.Theme.gradientStart;
