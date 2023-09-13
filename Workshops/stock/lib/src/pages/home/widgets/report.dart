@@ -8,6 +8,7 @@ class Report extends StatelessWidget {
     return Center(
       child: FlutterLogo(
         style: FlutterLogoStyle.stacked,
+        size: 450,
       ),
     );
   }

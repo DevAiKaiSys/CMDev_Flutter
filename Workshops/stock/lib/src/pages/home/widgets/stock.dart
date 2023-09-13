@@ -6,7 +6,9 @@ class Stock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: FlutterLogo(),
+      child: FlutterLogo(
+        size: 450,
+      ),
     );
   }
 }
