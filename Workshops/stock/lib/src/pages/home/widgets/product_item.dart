@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stock/src/utils/format.dart';
 
 class ProductItem extends StatelessWidget {
   final double maxHeight;
@@ -7,26 +8,37 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          _buildImage(),
-          _buildInfo(),
-        ],
+    return GestureDetector(
+      onTap: () {
+        print('xxxx');
+      },
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            _buildImage(),
+            _buildInfo(),
+          ],
+        ),
       ),
     );
   }
 
-  Image _buildImage() {
-    final height = maxHeight * 0.7;
+  Stack _buildImage() {
+    final height = maxHeight * 0.65;
     final productImage =
         'https://cdn-images-1.medium.com/max/280/1*X5PBTDQQ2Csztg3a6wofIQ@2x.png';
 
-    return Image.network(
-      productImage,
-      // height: 350,
-      height: height,
+    return Stack(
+      children: [
+        Image.network(
+          productImage,
+          // height: 350,
+          height: height,
+          width: double.infinity,
+        ),
+        _buildOutofStock(),
+      ],
     );
   }
 
@@ -35,6 +47,7 @@ class ProductItem extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Contrary to popular belief, Lorem Ipsum is not simply random text.',
@@ -44,11 +57,40 @@ class ProductItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('\$4444'),
-                  Text('1234 pieces'),
+                  // Text('\$4444'),
+                  Text(
+                    '฿${formatCurrency.format(1111)}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '${formatNumber.format(9999)} pieces',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.deepOrangeAccent),
+                  ),
                 ],
               )
             ],
+          ),
+        ),
+      );
+
+  _buildOutofStock() => Positioned(
+        top: 2,
+        right: 2,
+        child: Card(
+          color: Colors.amber,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            child: Text(
+              'out of stock',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
           ),
         ),
       );
