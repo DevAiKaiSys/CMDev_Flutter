@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stock/src/constants/setting.dart';
 import 'package:stock/src/config/route.dart' as custom_route;
+import 'package:stock/src/viewmodels/menu_view_model.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -17,6 +18,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
     return Drawer(
       child: Column(
         children: [
+          _buildProfile(),
+          ..._buildMainMenu(),
           Spacer(),
           // TextButton(
           //   onPressed: () {
@@ -36,7 +39,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             // ),
             title: Text('Logout'),
             onTap: showDialogLogout,
-          )
+          ),
         ],
       ),
     );
@@ -79,4 +82,35 @@ class _CustomDrawerState extends State<CustomDrawer> {
       },
     );
   }
+
+  _buildProfile() => UserAccountsDrawerHeader(
+        // decoration: BoxDecoration(color: Colors.red),
+        accountName: Text('data'),
+        accountEmail: Text('dev@mail.com'),
+        currentAccountPicture: CircleAvatar(
+          backgroundImage: NetworkImage(
+            'https://cdn-images-1.medium.com/max/280/1*X5PBTDQQ2Csztg3a6wofIQ@2x.png',
+          ),
+        ),
+      );
+
+  List<ListTile> _buildMainMenu() => MenuViewModel()
+      .items
+      .map((item) => ListTile(
+            title: Text(
+              item.title,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 18.0,
+              ),
+            ),
+            leading: FaIcon(
+              item.icon,
+              color: item.iconColor,
+            ),
+            onTap: () {
+              item.onTap(context);
+            },
+          ))
+      .toList();
 }
