@@ -104,9 +104,23 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 fontSize: 18.0,
               ),
             ),
-            leading: FaIcon(
-              item.icon,
-              color: item.iconColor,
+            leading: Badge(
+              // showBadge: item.icon == FontAwesomeIcons.inbox,
+              isLabelVisible: item.icon == FontAwesomeIcons.inbox,
+              // badgeContent: Text(
+              label: Text(
+                '99',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+              // badgeColor: Colors.red,
+              textColor: Colors.red,
+              child: FaIcon(
+                item.icon,
+                color: item.iconColor,
+              ),
             ),
             onTap: () {
               item.onTap(context);
