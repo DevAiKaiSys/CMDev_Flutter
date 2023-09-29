@@ -16,9 +16,8 @@ class NetworkService {
   final dio = Dio();
 
   Future<List<Post>> fetchPosts(int startIndex, {int limit = 10}) async {
-    const url = 'https://jsonplaceholder.typicode.com/posts?_start=0&_limit=10';
-    Response response;
-    response = await dio.get(url);
+    final url = 'https://jsonplaceholder.typicode.com/posts?_start=$startIndex&_limit=$limit';
+    Response response = await dio.get(url);
     if (response.statusCode == 200) {
       return postFromJson(jsonEncode(response.data));
     }

@@ -1,13 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:stock/src/models/post.dart';
 import 'package:stock/src/pages/home/widgets/product_item.dart';
+import 'package:stock/src/services/network_service.dart';
 
-class Stock extends StatelessWidget {
-  final _spacing = 4.0;
-
+class Stock extends StatefulWidget {
   const Stock({super.key});
 
   @override
+  State<Stock> createState() => _StockState();
+}
+
+class _StockState extends State<Stock> {
+  final _spacing = 4.0;
+
+  @override
   Widget build(BuildContext context) {
+    return FutureBuilder<List<Post>>(
+      future: NetworkService().fetchPosts(0),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<Post>? posts = snapshot.data;
+          if (posts == null || posts.isEmpty) {
+            return Container(
+              margin: EdgeInsets.only(top: 22),
+              alignment: Alignment.topCenter,
+              child: Text('No data'),
+            );
+          }
+          return RefreshIndicator(
+              onRefresh: () async {
+                setState(() {});
+              },
+              child: _buildProductGridView(posts));
+        } else if (snapshot.hasError) {
+          return Container(
+            margin: EdgeInsets.only(top: 22),
+            alignment: Alignment.topCenter,
+            child: Text(snapshot.error.toString()),
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  GridView _buildProductGridView(List<Post> posts) {
     return GridView.builder(
       padding: EdgeInsets.only(
         left: _spacing,
@@ -30,7 +69,8 @@ class Stock extends StatelessWidget {
           return ProductItem(constraints.maxHeight);
         },
       ),
-      itemCount: 5,
+      // itemCount: 5,
+      itemCount: posts.length,
     );
   }
 }
