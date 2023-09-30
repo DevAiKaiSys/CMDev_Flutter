@@ -15,10 +15,59 @@ class NetworkService {
 
   //
 
-  final dio = Dio();
+  // final dio = Dio();
+  //
+  // void interceptors() {
+  //   dio.interceptors.add(
+  //     InterceptorsWrapper(
+  //       onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+  //         // Do something before request is sent.
+  //         // If you want to resolve the request with custom data,
+  //         // you can resolve a `Response` using `handler.resolve(response)`.
+  //         // If you want to reject the request with a error message,
+  //         // you can reject with a `DioException` using `handler.reject(dioError)`.
+  //         return handler.next(options);
+  //       },
+  //       onResponse: (Response response, ResponseInterceptorHandler handler) {
+  //         // Do something with response data.
+  //         // If you want to reject the request with a error message,
+  //         // you can reject a `DioException` object using `handler.reject(dioError)`.
+  //         return handler.next(response);
+  //       },
+  //       onError: (DioException e, ErrorInterceptorHandler handler) {
+  //         // Do something with response error.
+  //         // If you want to resolve the request with some custom data,
+  //         // you can resolve a `Response` object using `handler.resolve(response)`.
+  //         return handler.next(e);
+  //       },
+  //     ),
+  //   );
+  // }
+
+  final dio = Dio()
+    ..interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          options.baseUrl = API.BASE_URL;
+          options.connectTimeout = Duration(seconds: 5);
+          options.receiveTimeout = Duration(seconds: 3);
+          print(options.baseUrl + options.path);
+          return handler.next(options);
+        },
+        onResponse: (response, handler) {
+          return handler.next(response);
+        },
+        onError: (e, handler) {
+          // return handler.next(e);
+          DioException exception = e.copyWith(message: 'Network failed');
+          return handler.next(exception);
+        },
+      ),
+    );
 
   Future<List<Product>> getAllProduct() async {
-    final url = '${API.BASE_URL}${API.PRODUCT}';
+    // final url = '${API.BASE_URL}${API.PRODUCT}';
+    final url = API.PRODUCT;
     Response response = await dio.get(url);
     if (response.statusCode == 200) {
       return productFromJson(jsonEncode(response.data));
