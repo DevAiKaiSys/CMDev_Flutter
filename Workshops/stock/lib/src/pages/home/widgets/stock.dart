@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stock/src/models/post.dart';
+import 'package:stock/src/models/product.dart';
 import 'package:stock/src/pages/home/widgets/product_item.dart';
 import 'package:stock/src/services/network_service.dart';
 
@@ -15,12 +16,12 @@ class _StockState extends State<Stock> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Post>>(
-      future: NetworkService().fetchPosts(0),
+    return FutureBuilder<List<Product>>(
+      future: NetworkService().getAllProduct(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<Post>? posts = snapshot.data;
-          if (posts == null || posts.isEmpty) {
+          List<Product>? products = snapshot.data;
+          if (products == null || products.isEmpty) {
             return Container(
               margin: EdgeInsets.only(top: 22),
               alignment: Alignment.topCenter,
@@ -31,7 +32,7 @@ class _StockState extends State<Stock> {
               onRefresh: () async {
                 setState(() {});
               },
-              child: _buildProductGridView(posts));
+              child: _buildProductGridView(products));
         } else if (snapshot.hasError) {
           return Container(
             margin: EdgeInsets.only(top: 22),
@@ -46,7 +47,7 @@ class _StockState extends State<Stock> {
     );
   }
 
-  GridView _buildProductGridView(List<Post> posts) {
+  GridView _buildProductGridView(List<Product> products) {
     return GridView.builder(
       padding: EdgeInsets.only(
         left: _spacing,
@@ -70,7 +71,7 @@ class _StockState extends State<Stock> {
         },
       ),
       // itemCount: 5,
-      itemCount: posts.length,
+      itemCount: products.length,
     );
   }
 }
