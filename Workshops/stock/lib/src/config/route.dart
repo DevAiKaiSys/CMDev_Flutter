@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:stock/src/pages/dashboard/dashboard_page.dart';
+import 'package:stock/src/pages/management/management_page.dart';
 import 'package:stock/src/pages/pages.dart';
 
 // import 'package:stock/src/pages/home/home_page.dart';
@@ -9,6 +10,7 @@ class Route {
   static const home = '/home';
   static const login = '/login';
   static const dashboard = '/dashboard';
+  static const management = '/management';
 
   static Map<String, WidgetBuilder> getAll() => _route;
 
@@ -16,5 +18,6 @@ class Route {
     home: (context) => HomePage(),
     login: (context) => LoginPage(),
     dashboard: (context) => DashBoardPage(),
+    management: (context) => ManagementPage(),
   };
 }
