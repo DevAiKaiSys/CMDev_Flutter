@@ -67,7 +67,7 @@ class _StockState extends State<Stock> {
           // ProductItem(),
           LayoutBuilder(
         builder: (context, BoxConstraints constraints) {
-          return ProductItem(constraints.maxHeight);
+          return ProductItem(constraints.maxHeight, products[index]);
         },
       ),
       // itemCount: 5,

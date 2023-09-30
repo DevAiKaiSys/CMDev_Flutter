@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:stock/src/constants/api.dart';
+import 'package:stock/src/models/product.dart';
 import 'package:stock/src/utils/format.dart';
 import 'package:stock/src/widgets/image_not_found.dart';
 
 class ProductItem extends StatelessWidget {
   final double maxHeight;
 
-  const ProductItem(this.maxHeight, {super.key});
+  final Product product;
+
+  const ProductItem(this.maxHeight, this.product, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +31,11 @@ class ProductItem extends StatelessWidget {
 
   Stack _buildImage() {
     final height = maxHeight * 0.65;
-    final productImage =
-        'https://cdn-images-1.medium.com/max/280/1*X5PBTDQQ2Csztg3a6wofIQ@2x.png';
-        // '';
-    final stock = 0;
+    // final productImage =
+    //     'https://cdn-images-1.medium.com/max/280/1*X5PBTDQQ2Csztg3a6wofIQ@2x.png';
+    final productImage = '${API.IMAGE_URL}/${product.image}';
+    // '';
+    // final stock = 0;
 
     return Stack(
       children: [
@@ -46,7 +51,8 @@ class ProductItem extends StatelessWidget {
                 )
               : ImageNotFound(),
         ),
-        if (stock <= 0) _buildOutofStock(),
+        // if (stock <= 0) _buildOutofStock(),
+        if (product.stock <= 0) _buildOutofStock(),
       ],
     );
   }
@@ -59,7 +65,8 @@ class ProductItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Contrary to popular belief, Lorem Ipsum is not simply random text.',
+                // 'Contrary to popular belief, Lorem Ipsum is not simply random text.',
+                product.name,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -68,13 +75,15 @@ class ProductItem extends StatelessWidget {
                 children: [
                   // Text('\$4444'),
                   Text(
-                    '฿${formatCurrency.format(1111)}',
+                    // '฿${formatCurrency.format(1111)}',
+                    '฿${formatCurrency.format(product.price)}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    '${formatNumber.format(9999)} pieces',
+                    // '${formatNumber.format(9999)} pieces',
+                    '${formatNumber.format(product.stock)} pieces',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.deepOrangeAccent),
