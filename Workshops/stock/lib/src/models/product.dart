@@ -11,22 +11,22 @@ String productToJson(List<Product> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Product {
-  int id;
-  String name;
-  String image;
-  int stock;
-  int price;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? name;
+  String? image;
+  int? stock;
+  int? price;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   Product({
-    required this.id,
-    required this.name,
-    required this.image,
-    required this.stock,
-    required this.price,
-    required this.createdAt,
-    required this.updatedAt,
+    this.id,
+    this.name,
+    this.image,
+    this.stock,
+    this.price,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -45,7 +45,7 @@ class Product {
         "image": image,
         "stock": stock,
         "price": price,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
       };
 }

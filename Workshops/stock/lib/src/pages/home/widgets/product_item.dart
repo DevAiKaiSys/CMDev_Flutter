@@ -52,7 +52,7 @@ class ProductItem extends StatelessWidget {
               : ImageNotFound(),
         ),
         // if (stock <= 0) _buildOutofStock(),
-        if (product.stock <= 0) _buildOutofStock(),
+        if (product.stock! <= 0) _buildOutofStock(),
       ],
     );
   }
@@ -66,7 +66,7 @@ class ProductItem extends StatelessWidget {
             children: [
               Text(
                 // 'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-                product.name,
+                product.name!,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
