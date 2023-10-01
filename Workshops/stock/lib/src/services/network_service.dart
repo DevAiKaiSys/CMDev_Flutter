@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:stock/src/constants/api.dart';
 import 'package:stock/src/models/post.dart';
 import 'package:stock/src/models/product.dart';
+import 'package:http_parser/http_parser.dart';
 
 class NetworkService {
   // singleton
@@ -71,6 +73,28 @@ class NetworkService {
     Response response = await dio.get(url);
     if (response.statusCode == 200) {
       return productFromJson(jsonEncode(response.data));
+    }
+    throw Exception('Network failed');
+  }
+
+  Future<String> addProduct(Product product, {File? imageFile}) async {
+    final url = API.PRODUCT;
+
+    FormData data = FormData.fromMap({
+      'name': product.name,
+      'price': product.price,
+      'stock': product.stock,
+      if (imageFile != null)
+        'photo': await MultipartFile.fromFile(
+          imageFile.path,
+          contentType: MediaType('image', 'jpg'),
+        )
+    });
+
+    // Response response = await dio.post(url, data: product); // send json
+    Response response = await dio.post(url, data: data); // send formdata
+    if (response.statusCode == 201) {
+      return 'Add Successfully';
     }
     throw Exception('Network failed');
   }

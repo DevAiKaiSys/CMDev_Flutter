@@ -23,7 +23,10 @@ class _StockState extends State<Stock> {
       body: _buildNetwork(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, custom_route.Route.management);
+          Navigator.pushNamed(context, custom_route.Route.management)
+              .then((value) {
+            setState(() {});
+          });
         },
         child: FaIcon(FontAwesomeIcons.plus),
       ),

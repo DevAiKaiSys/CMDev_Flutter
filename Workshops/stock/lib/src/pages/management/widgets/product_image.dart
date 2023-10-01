@@ -8,7 +8,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 class ProductImage extends StatefulWidget {
-  const ProductImage({super.key});
+  final Function(File imageFile) callBack;
+
+  const ProductImage(this.callBack, {super.key});
 
   @override
   State<ProductImage> createState() => _ProductImageState();
@@ -192,6 +194,7 @@ class _ProductImageState extends State<ProductImage> {
       if (file != null) {
         setState(() {
           _croppedFile = file;
+          widget.callBack(File(_croppedFile!.path));
         });
       }
     });

@@ -33,7 +33,7 @@ class ProductItem extends StatelessWidget {
     final height = maxHeight * 0.65;
     // final productImage =
     //     'https://cdn-images-1.medium.com/max/280/1*X5PBTDQQ2Csztg3a6wofIQ@2x.png';
-    final productImage = '${API.IMAGE_URL}/${product.image}';
+    final productImage = product.image;
     // '';
     // final stock = 0;
 
@@ -44,7 +44,7 @@ class ProductItem extends StatelessWidget {
           height: height,
           child: productImage != null && productImage.isNotEmpty
               ? Image.network(
-                  productImage,
+                  '${API.IMAGE_URL}/$productImage',
                   // height: 350,
                   // height: height,
                   // width: double.infinity,
