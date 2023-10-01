@@ -27,18 +27,20 @@ class _CustomDrawerState extends State<CustomDrawer> {
           //   },
           //   child: Text('logout'),
           // )
-          ListTile(
-            leading: FaIcon(
-              // FontAwesomeIcons.signOutAlt,
-              FontAwesomeIcons.rightFromBracket,
-              color: Colors.grey,
+          SafeArea(
+            child: ListTile(
+              leading: FaIcon(
+                // FontAwesomeIcons.signOutAlt,
+                FontAwesomeIcons.rightFromBracket,
+                color: Colors.grey,
+              ),
+              // trailing: FaIcon(
+              //   FontAwesomeIcons.rightFromBracket,
+              //   color: Colors.grey,
+              // ),
+              title: Text('Logout'),
+              onTap: showDialogLogout,
             ),
-            // trailing: FaIcon(
-            //   FontAwesomeIcons.rightFromBracket,
-            //   color: Colors.grey,
-            // ),
-            title: Text('Logout'),
-            onTap: showDialogLogout,
           ),
         ],
       ),

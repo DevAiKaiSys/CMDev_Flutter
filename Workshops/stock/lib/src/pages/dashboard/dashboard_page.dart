@@ -8,6 +8,7 @@ class DashBoardPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('DashBoard'),
+        centerTitle: false,
       ),
       body: Center(
         child: FlutterLogo(

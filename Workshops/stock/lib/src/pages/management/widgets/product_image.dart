@@ -146,20 +146,22 @@ class _ProductImageState extends State<ProductImage> {
 
     showModalBottomSheet(
       context: context,
-      builder: (context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          buildListTile(
-            Icons.photo_camera,
-            "Take a picture from camera",
-            ImageSource.camera,
-          ),
-          buildListTile(
-            Icons.photo_library,
-            "Choose from photo library",
-            ImageSource.gallery,
-          ),
-        ],
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            buildListTile(
+              Icons.photo_camera,
+              "Take a picture from camera",
+              ImageSource.camera,
+            ),
+            buildListTile(
+              Icons.photo_library,
+              "Choose from photo library",
+              ImageSource.gallery,
+            ),
+          ],
+        ),
       ),
     );
   }
