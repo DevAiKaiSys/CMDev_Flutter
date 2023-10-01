@@ -1,26 +1,41 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:stock/src/constants/api.dart';
 
 class ProductImage extends StatefulWidget {
-  final Function(File imageFile) callBack;
+  final Function(File? imageFile) callBack;
+  final String? imageURL;
 
-  const ProductImage(this.callBack, {super.key});
+  const ProductImage(this.callBack, this.imageURL, {super.key});
 
   @override
   State<ProductImage> createState() => _ProductImageState();
 }
 
 class _ProductImageState extends State<ProductImage> {
-  // File? _imageFile;
-  XFile? _pickedFile;
-  CroppedFile? _croppedFile;
+  File? _imageFile;
+
+  // XFile? _pickedFile;
+  // CroppedFile? _croppedFile;
   final ImagePicker picker = ImagePicker();
+  String? _imageURL;
+
+  @override
+  void initState() {
+    _imageURL = widget.imageURL;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _imageFile?.delete();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +60,9 @@ class _ProductImageState extends State<ProductImage> {
       );
 
   _buildPreviewImage() {
-    // if (_imageFile == null) {
-    //   return SizedBox();
-    // }
+    if ((_imageURL == null || _imageURL!.isEmpty) && _imageFile == null) {
+      return SizedBox();
+    }
 
     final container = (Widget child) => Container(
           color: Colors.grey[100],
@@ -57,26 +72,28 @@ class _ProductImageState extends State<ProductImage> {
           child: child,
         );
 
-    // return Stack(children: [
-    //   container(Image.file(_imageFile!)),
-    //   _buildDeleteImageButton(),
-    // ]);
+    return _imageURL != null
+        ? container(Image.network('${API.IMAGE_URL}/$_imageURL'))
+        : Stack(children: [
+            container(Image.file(_imageFile!)),
+            _buildDeleteImageButton(),
+          ]);
 
-    String? path;
-    if (_croppedFile != null) {
-      path = _croppedFile!.path;
-    } else if (_pickedFile != null) {
-      path = _pickedFile!.path;
-    }
-
-    if (path != null) {
-      return Stack(children: [
-        container(Image.file(File(path))),
-        _buildDeleteImageButton(),
-      ]);
-    }
-
-    return const SizedBox.shrink();
+    // String? path;
+    // if (_croppedFile != null) {
+    //   path = _croppedFile!.path;
+    // } else if (_pickedFile != null) {
+    //   path = _pickedFile!.path;
+    // }
+    //
+    // if (path != null) {
+    //   return Stack(children: [
+    //     container(Image.file(File(path))),
+    //     _buildDeleteImageButton(),
+    //   ]);
+    // }
+    //
+    // return const SizedBox.shrink();
   }
 
   _buildDeleteImageButton() => Positioned(
@@ -84,9 +101,10 @@ class _ProductImageState extends State<ProductImage> {
         child: IconButton(
           onPressed: () {
             setState(() {
-              // _imageFile = null;
-              _pickedFile = null;
-              _croppedFile = null;
+              _imageFile = null;
+              // _pickedFile = null;
+              // _croppedFile = null;
+              widget.callBack(null);
             });
           },
           icon: Icon(
@@ -193,8 +211,11 @@ class _ProductImageState extends State<ProductImage> {
     ).then((file) {
       if (file != null) {
         setState(() {
-          _croppedFile = file;
-          widget.callBack(File(_croppedFile!.path));
+          // _croppedFile = file;
+          // widget.callBack(File(_croppedFile!.path));
+          _imageFile = File(file.path);
+          widget.callBack(_imageFile);
+          _imageURL = null;
         });
       }
     });
