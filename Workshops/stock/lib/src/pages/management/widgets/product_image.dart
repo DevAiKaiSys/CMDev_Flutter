@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class ProductImage extends StatefulWidget {
   const ProductImage({super.key});
@@ -14,7 +15,9 @@ class ProductImage extends StatefulWidget {
 }
 
 class _ProductImageState extends State<ProductImage> {
-  File? _imageFile;
+  // File? _imageFile;
+  XFile? _pickedFile;
+  CroppedFile? _croppedFile;
   final ImagePicker picker = ImagePicker();
 
   @override
@@ -40,9 +43,9 @@ class _ProductImageState extends State<ProductImage> {
       );
 
   _buildPreviewImage() {
-    if (_imageFile == null) {
-      return SizedBox();
-    }
+    // if (_imageFile == null) {
+    //   return SizedBox();
+    // }
 
     final container = (Widget child) => Container(
           color: Colors.grey[100],
@@ -52,10 +55,26 @@ class _ProductImageState extends State<ProductImage> {
           child: child,
         );
 
-    return Stack(children: [
-      container(Image.file(_imageFile!)),
-      _buildDeleteImageButton(),
-    ]);
+    // return Stack(children: [
+    //   container(Image.file(_imageFile!)),
+    //   _buildDeleteImageButton(),
+    // ]);
+
+    String? path;
+    if (_croppedFile != null) {
+      path = _croppedFile!.path;
+    } else if (_pickedFile != null) {
+      path = _pickedFile!.path;
+    }
+
+    if (path != null) {
+      return Stack(children: [
+        container(Image.file(File(path))),
+        _buildDeleteImageButton(),
+      ]);
+    }
+
+    return const SizedBox.shrink();
   }
 
   _buildDeleteImageButton() => Positioned(
@@ -63,7 +82,9 @@ class _ProductImageState extends State<ProductImage> {
         child: IconButton(
           onPressed: () {
             setState(() {
-              _imageFile = null;
+              // _imageFile = null;
+              _pickedFile = null;
+              _croppedFile = null;
             });
           },
           icon: Icon(
@@ -135,8 +156,42 @@ class _ProductImageState extends State<ProductImage> {
     )
         .then((file) {
       if (file != null) {
+        // setState(() {
+        //   _imageFile = File(file.path);
+        // });
+        _cropImage(file.path);
+      }
+    });
+  }
+
+  void _cropImage(String path) {
+    ImageCropper().cropImage(
+      sourcePath: path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    ).then((file) {
+      if (file != null) {
         setState(() {
-          _imageFile = File(file.path);
+          _croppedFile = file;
         });
       }
     });
