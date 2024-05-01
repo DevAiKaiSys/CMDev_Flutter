@@ -12,12 +12,10 @@ project_root/
 ├── lib/
 │   │
 │   ├── configs/
-│   │   ├── api_config.dart        # Configuration for API base URL
-│   │   ├── theme_config.dart      # Configuration for app theme
-│   │   └── settings_config.dart   # Configuration for other app settings
+│   │   ├── ...                   # Configuration files for various settings
 │   │
 │   ├── constants/                 # Constants used throughout the app
-│   │   ├── app_constants.dart     # General application constants
+│   │   ├── asset.dart            # Constants related to assets
 │   │   └── ...
 │   │
 │   ├── data/                      # Data layer containing data sources and repositories
@@ -49,6 +47,7 @@ project_root/
 │   └── ...
 │
 ├── assets/                        # Asset files such as images, fonts, etc.
+│   └── images/                    # Directory for image assets
 │
 └── pubspec.yaml                   # Flutter project dependencies and configurations
 ```
