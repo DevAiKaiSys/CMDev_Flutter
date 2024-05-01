@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mystock_carch/configs/theme.dart' as customTheme;
 
+import 'widgets/header.dart';
+
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
@@ -15,9 +17,20 @@ class LoginPage extends StatelessWidget {
               gradient: customTheme.Theme.gradient,
             ),
           ),
+          // init layout
+          // const Column(
+          //   children: [
+          //     Text('header'),
+          //     Text('form'),
+          //     Text('forget password'),
+          //     Text('SSO'),
+          //     Text('register'),
+          //   ],
+          // ),
           const Column(
             children: [
-              Text('header'),
+              // Text('header'),
+              Header(),
               Text('form'),
               Text('forget password'),
               Text('SSO'),
