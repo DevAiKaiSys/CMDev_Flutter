@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/lesson/ep19/my_text_widget.dart';
 import 'package:flutter_application/lesson/ep20/my_button_widget.dart';
+import 'package:flutter_application/lesson/ep21/my_image_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             MyTextWidget(),
             MyButtonsWidget(),
+            MyImageWidget(),
           ],
         ),
       ),

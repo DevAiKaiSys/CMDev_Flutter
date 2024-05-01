@@ -25,7 +25,7 @@ class MyButtonsWidget extends StatelessWidget {
           //   ),
           // ),
           onPressed: () {
-            print("TextButton pressed");
+            debugPrint("TextButton pressed");
           },
           child: const Text('TextButton'),
         ),
