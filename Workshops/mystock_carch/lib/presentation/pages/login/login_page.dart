@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mystock_carch/configs/theme.dart' as customTheme;
+import 'package:mystock_carch/configs/theme.dart' as custom_theme;
 
 import 'widgets/header.dart';
 import 'widgets/login_form.dart';
@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              gradient: customTheme.Theme.gradient,
+              gradient: custom_theme.Theme.gradient,
             ),
           ),
           // init layout
