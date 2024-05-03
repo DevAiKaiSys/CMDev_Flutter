@@ -1,6 +1,8 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mystock_carch/configs/theme.dart' as custom_theme;
+import 'package:mystock_carch/presentation/utils/regex_validator.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -12,6 +14,9 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   late TextEditingController usernameController;
   late TextEditingController passwordController;
+
+  String? _errorUsername;
+  String? _errorPassword;
 
   @override
   void initState() {
@@ -50,8 +55,11 @@ class _LoginFormState extends State<LoginForm> {
         padding:
             const EdgeInsets.only(top: 20, bottom: 58, left: 28, right: 28),
         child: FormInput(
-            usernameController: usernameController,
-            passwordController: passwordController),
+          usernameController: usernameController,
+          passwordController: passwordController,
+          errorUsername: _errorUsername,
+          errorPassword: _errorPassword,
+        ),
       ),
     );
   }
@@ -62,8 +70,36 @@ class _LoginFormState extends State<LoginForm> {
         decoration: _boxDecoration(),
         child: TextButton(
           onPressed: () {
-            debugPrint(usernameController.text);
-            debugPrint(passwordController.text);
+            String username = usernameController.text;
+            String password = passwordController.text;
+
+            _errorUsername = null;
+            _errorPassword = null;
+
+            if (!EmailSubmitRegexValidator().isValid(username)) {
+              _errorUsername = 'The Email mute be a valid email.';
+            }
+
+            if (password.length < 6) {
+              _errorPassword = 'Must be at least 6 characters.';
+            }
+
+            if (_errorUsername == null && _errorPassword == null) {
+              // debugPrint('form valid');
+              showLoading();
+              Future.delayed(const Duration(seconds: 2)).then((value) async {
+                Navigator.pop(context);
+                if (username == 'aikaisys@dev.com' && password == '1234567') {
+                  debugPrint('login successfully');
+                } else {
+                  showAlertBar();
+                }
+                setState(() {});
+              });
+            } else {
+              debugPrint('form invalid');
+              setState(() {});
+            }
           },
           child: const Text(
             'LOGIN',
@@ -75,6 +111,29 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ),
       );
+
+  void showAlertBar() {
+    Flushbar(
+      title: "Username or Password is incorrect",
+      message: "Please try again.",
+      icon: const Icon(
+        Icons.error,
+        size: 28.0,
+        color: Colors.red,
+      ),
+      duration: const Duration(seconds: 3),
+      margin: const EdgeInsets.all(8),
+    ).show(context);
+  }
+
+  void showLoading() {
+    Flushbar(
+      message: 'Loading...',
+      showProgressIndicator: true,
+      flushbarPosition: FlushbarPosition.TOP,
+      flushbarStyle: FlushbarStyle.GROUNDED,
+    ).show(context);
+  }
 
   BoxDecoration _boxDecoration() {
     const gradientStart = custom_theme.Theme.gradientStart;
@@ -105,10 +164,16 @@ class _LoginFormState extends State<LoginForm> {
 class FormInput extends StatefulWidget {
   final TextEditingController usernameController;
   final TextEditingController passwordController;
+
+  final String? errorUsername;
+  final String? errorPassword;
+
   const FormInput({
     super.key,
     required this.usernameController,
     required this.passwordController,
+    required this.errorUsername,
+    required this.errorPassword,
   });
 
   @override
@@ -150,6 +215,7 @@ class _FormInputState extends State<FormInput> {
             size: 22.0,
             color: _color,
           ),
+          errorText: widget.errorPassword,
         ),
         obscureText: true,
       );
@@ -166,6 +232,7 @@ class _FormInputState extends State<FormInput> {
             size: 22.0,
             color: _color,
           ),
+          errorText: widget.errorUsername,
         ),
       );
 }

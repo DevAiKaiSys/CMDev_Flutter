@@ -6,6 +6,14 @@
 flutter pub add font_awesome_flutter
 ```
 
+# toasts
+
+[another_flushbar](https://pub.dev/packages/another_flushbar)
+
+```
+flutter pub add another_flushbar
+```
+
 # run unit test
 
 ```
@@ -51,6 +59,8 @@ project_root/
 │   │   ├── widgets/              # Reusable UI components
 │   │   ├── blocs/                # BLoCs for state management
 │   │   ├── utils/                # Utility functions and classes
+│   │   │   ├── regex_validator.cs
+│   │   │   ├── format.cs
 │   │   ├── app.dart              # Main application widget
 │   │   └── ...
 │   │
