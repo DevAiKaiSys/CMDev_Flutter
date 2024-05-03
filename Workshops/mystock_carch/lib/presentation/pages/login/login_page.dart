@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mystock_carch/configs/theme.dart' as customTheme;
 
 import 'widgets/header.dart';
+import 'widgets/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -31,7 +32,8 @@ class LoginPage extends StatelessWidget {
             children: [
               // Text('header'),
               Header(),
-              Text('form'),
+              // Text('form'),
+              LoginForm(),
               Text('forget password'),
               Text('SSO'),
               Text('register'),

@@ -1,3 +1,11 @@
+# icons
+
+[font_awesome_flutter](https://pub.dev/packages/font_awesome_flutter)
+
+```
+flutter pub add font_awesome_flutter
+```
+
 # run unit test
 
 ```
@@ -13,7 +21,7 @@ project_root/
 │   │
 │   ├── configs/
 │   │   ├── theme.dart            # Configuration for app theme
-│   │   └── ...                   
+│   │   └── ...
 │   │
 │   ├── constants/                # Constants used throughout the app
 │   │   ├── asset_constants.dart  # Constants related to assets
@@ -33,12 +41,12 @@ project_root/
 │   │
 │   ├── presentation/             # Presentation layer containing UI, BLoCs, and widgets
 │   │   ├── pages/                # Screen pages
-│   │   │   ├── home/    
+│   │   │   ├── home/
 │   │   │   │   ├── home_page.dart    # Main application page
-│   │   │   ├── login/    
+│   │   │   ├── login/
 │   │   │   │   ├── widgets/          # Widgets specific to login page
 │   │   │   │   │   ├── login_form.dart
-│   │   │   │   ├── login_page.dart    
+│   │   │   │   ├── login_page.dart
 │   │   │   └── ...
 │   │   ├── widgets/              # Reusable UI components
 │   │   ├── blocs/                # BLoCs for state management
