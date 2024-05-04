@@ -29,20 +29,51 @@ class LoginPage extends StatelessWidget {
           //     Text('register'),
           //   ],
           // ),
-          const Column(
-            children: [
-              // Text('header'),
-              Header(),
-              // Text('form'),
-              LoginForm(),
-              Text('forget password'),
-              // Text('SSO'),
-              SingleSignOn(),
-              Text('register'),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                // Text('header'),
+                const Header(),
+                // Text('form'),
+                const LoginForm(),
+                // Text('forget password'),
+                const SizedBox(height: 30),
+                _buildTextButton(
+                  'Forgot Password?',
+                  onPressed: () {
+                    //todo
+                  },
+                ),
+                // Text('SSO'),
+                const SingleSignOn(),
+                // Text('register'),
+                const SizedBox(height: 28),
+                _buildTextButton(
+                  "Don't have an Account",
+                  onPressed: () {
+                    //todo
+                  },
+                ),
+                const SizedBox(height: 80),
+              ],
+            ),
           ),
         ],
       ),
     );
+  }
+
+  TextButton _buildTextButton(String text,
+      {VoidCallback? onPressed, double fontSize = 16}) {
+    return TextButton(
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: fontSize,
+            fontWeight: FontWeight.normal,
+          ),
+        ));
   }
 }
