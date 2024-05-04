@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mystock_carch/presentation/pages/home/widgets/custom_drawer.dart';
 import 'package:mystock_carch/presentation/pages/home/widgets/custom_tabbar.dart';
-
-import 'widgets/chart.dart';
-import 'widgets/report.dart';
-import 'widgets/stock.dart';
+import 'package:mystock_carch/presentation/viewmodels/tab_menu_view_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key /*, this.name = '-', this.age = 0*/
@@ -18,6 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _tabsMenu = TabMenuViewModel().items;
+
   @override
   Widget build(BuildContext context) {
     /*final Map<Object, Object> arguments =
@@ -34,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     }*/
 
     return DefaultTabController(
-      length: 3,
+      length: /*3*/ _tabsMenu.length,
       child: Scaffold(
         body:
             /*// Image(image: AssetImage('assets/images/logo.png')),
@@ -71,26 +70,45 @@ class _HomePageState extends State<HomePage> {
           ),
         ),*/
             /*Image.asset('assets/images/logo.png')*/
-            const TabBarView(
-          children: [
-            /*FlutterLogo(
+            TabBarView(
+          /*children: [
+            */ /*FlutterLogo(
               style: FlutterLogoStyle.horizontal,
             ),
             FlutterLogo(
               style: FlutterLogoStyle.stacked,
             ),
-            FlutterLogo(),*/
+            FlutterLogo(),*/ /*
             Stock(),
             Chart(),
             Report(),
-          ],
+          ],*/
+          children: _tabsMenu.map((item) => item.widget).toList(),
         ),
-        appBar: AppBar(
-          title: const Text('Stock Workshop'),
-          bottom: CustomTabBar(),
-        ),
+        appBar: _buildAppBar(),
         drawer: const CustomDrawer(),
       ),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: const Text('Stock Workshop'),
+      bottom: CustomTabBar(tabsMenu: _tabsMenu),
+      actions: [
+        IconButton(
+          onPressed: () {
+            // todo
+          },
+          icon: const Icon(Icons.bookmark_border),
+        ),
+        IconButton(
+          onPressed: () {
+            // todo
+          },
+          icon: const Icon(Icons.qr_code),
+        ),
+      ],
     );
   }
 }
