@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mystock_carch/presentation/pages/home/widgets/custom_drawer.dart';
+import 'package:mystock_carch/presentation/pages/home/widgets/custom_tabbar.dart';
+
+import 'widgets/chart.dart';
+import 'widgets/report.dart';
+import 'widgets/stock.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key /*, this.name = '-', this.age = 0*/
@@ -28,46 +33,64 @@ class _HomePageState extends State<HomePage> {
       age = models['age'] as int;
     }*/
 
-    return Scaffold(
-      body:
-          /*// Image(image: AssetImage('assets/images/logo.png')),
-          // Image.asset('assets/images/logo.png'),
-          Column(
-        children: [
-          Image.asset(Asset.logoImage),
-          Image.network(
-              'https://storage.googleapis.com/cms-storage-bucket/4cdf1c5482cd30174cfe.png'),
-          FadeInImage.assetNetwork(
-            placeholder: 'assets/images/fade_logo.png',
-            image:
-                'https://storage.googleapis.com/cms-storage-bucket/c823e53b3a1a7b0d36a9.png',
-          ),
-        ],
-      ),*/
-          /*Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        body:
+            /*// Image(image: AssetImage('assets/images/logo.png')),
+            // Image.asset('assets/images/logo.png'),
+            Column(
           children: [
-            TextButton(
-              onPressed: () {
-                if (Navigator.canPop(context)) {
-                  Navigator.pop(context);
-                }
-              },
-              child: const Text('back'),
+            Image.asset(Asset.logoImage),
+            Image.network(
+                'https://storage.googleapis.com/cms-storage-bucket/4cdf1c5482cd30174cfe.png'),
+            FadeInImage.assetNetwork(
+              placeholder: 'assets/images/fade_logo.png',
+              image:
+                  'https://storage.googleapis.com/cms-storage-bucket/c823e53b3a1a7b0d36a9.png',
             ),
-            // Text(widget.name),
-            // Text(widget.age.toString()),
-            // Text(name),
-            // Text(age.toString()),
+          ],
+        ),*/
+            /*Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  if (Navigator.canPop(context)) {
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text('back'),
+              ),
+              // Text(widget.name),
+              // Text(widget.age.toString()),
+              // Text(name),
+              // Text(age.toString()),
+            ],
+          ),
+        ),*/
+            /*Image.asset('assets/images/logo.png')*/
+            const TabBarView(
+          children: [
+            /*FlutterLogo(
+              style: FlutterLogoStyle.horizontal,
+            ),
+            FlutterLogo(
+              style: FlutterLogoStyle.stacked,
+            ),
+            FlutterLogo(),*/
+            Stock(),
+            Chart(),
+            Report(),
           ],
         ),
-      ),*/
-          Image.asset('assets/images/logo.png'),
-      appBar: AppBar(
-        title: const Text('Stock Workshop'),
+        appBar: AppBar(
+          title: const Text('Stock Workshop'),
+          bottom: CustomTabBar(),
+        ),
+        drawer: const CustomDrawer(),
       ),
-      drawer: const CustomDrawer(),
     );
   }
 }
