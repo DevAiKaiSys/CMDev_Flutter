@@ -111,6 +111,7 @@ project_root/
 │   │   │   ├── index.dart
 │   │   │   └── ...
 │   │   ├── widgets/              # Reusable UI components
+│   │   │   ├── image_not_found.dart
 │   │   ├── viewmodels/            # View models for UI logic
 │   │   │   ├── single_sign_on_view_model.dart
 │   │   ├── blocs/                # BLoCs for state management

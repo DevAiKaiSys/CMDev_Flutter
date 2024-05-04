@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mystock_carch/presentation/utils/format.dart';
+import 'package:mystock_carch/presentation/widgets/image_not_found.dart';
 
 class ProductItem extends StatelessWidget {
   final double maxHeight;
@@ -28,7 +29,10 @@ class ProductItem extends StatelessWidget {
   _buildImage() {
     final height = maxHeight * 0.7;
     const productImage =
-        'https://cdn-images-1.medium.com/max/280/1*X5PBTDQQ2Csztg3a6wofIQ@2x.png';
+        // 'https://cdn-images-1.medium.com/max/280/1*X5PBTDQQ2Csztg3a6wofIQ@2x.png';
+        '';
+
+    const stock = 0;
 
     // return Image.network(
     //   productImage,
@@ -36,12 +40,22 @@ class ProductItem extends StatelessWidget {
     // );
     return Stack(
       children: [
-        Image.network(
+        /*Image.network(
           productImage,
           height: height,
           width: double.infinity,
         ),
-        _buildOutofStock(),
+        _buildOutofStock(),*/
+        SizedBox(
+          width: double.infinity,
+          height: height,
+          child: productImage.isNotEmpty
+              ? Image.network(
+                  productImage,
+                )
+              : const ImageNotFound(),
+        ),
+        if (stock <= 0) _buildOutofStock(),
       ],
     );
   }
