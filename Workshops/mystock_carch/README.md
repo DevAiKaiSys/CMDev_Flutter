@@ -54,13 +54,16 @@ project_root/
 │   │   │   ├── login/
 │   │   │   │   ├── widgets/          # Widgets specific to login page
 │   │   │   │   │   ├── login_form.dart
+│   │   │   │   │   └── ...
 │   │   │   │   ├── login_page.dart
 │   │   │   └── ...
 │   │   ├── widgets/              # Reusable UI components
+│   │   ├── viewmodels/            # View models for UI logic
+│   │   │   ├── single_sign_on_view_model.dart
 │   │   ├── blocs/                # BLoCs for state management
 │   │   ├── utils/                # Utility functions and classes
-│   │   │   ├── regex_validator.cs
-│   │   │   ├── format.cs
+│   │   │   ├── regex_validator.dart
+│   │   │   ├── format.dart
 │   │   ├── app.dart              # Main application widget
 │   │   └── ...
 │   │

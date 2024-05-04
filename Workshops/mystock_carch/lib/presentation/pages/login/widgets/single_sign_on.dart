@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mystock_carch/presentation/viewmodels/single_sign_on_view_model.dart';
 
 class SingleSignOn extends StatelessWidget {
   const SingleSignOn({super.key});
@@ -8,6 +10,8 @@ class SingleSignOn extends StatelessWidget {
     return Column(
       children: [
         _buildDivider(),
+        const SizedBox(height: 12),
+        _buildSingleSignOnButtons(),
       ],
     );
   }
@@ -46,4 +50,25 @@ class SingleSignOn extends StatelessWidget {
       ],
     );
   }
+
+  Row _buildSingleSignOnButtons() => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: SingleSignOnViewModel()
+            .items
+            .map(
+              (item) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: FloatingActionButton(
+                  heroTag: item.icon.toString(),
+                  onPressed: item.onPress,
+                  backgroundColor: item.backgroundColor,
+                  child: FaIcon(
+                    item.icon,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+      );
 }
