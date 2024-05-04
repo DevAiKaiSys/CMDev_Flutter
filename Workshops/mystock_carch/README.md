@@ -64,6 +64,22 @@ flutter pub add badges
 flutter pub add intl
 ```
 
+# make request to api
+
+[dio](https://pub.dev/packages/dio)
+
+```
+flutter pub add dio
+```
+
+# service locator
+
+[get_it](https://pub.dev/packages/get_it)
+
+```
+flutter pub add get_it
+```
+
 # run unit test
 
 ```
@@ -78,19 +94,22 @@ project_root/
 ├── lib/
 │   │
 │   ├── configs/
-│   │   ├── route.dart
-│   │   ├── theme.dart            # Configuration for app theme
+│   │   ├── route.dart                 # Configuration for app routing
+│   │   ├── theme.dart                 # Configuration for app theme
 │   │   └── ...
 │   │
-│   ├── constants/                # Constants used throughout the app
-│   │   ├── asset_constants.dart  # Constants related to assets
+│   ├── constants/                     # Constants used throughout the app
+│   │   ├── asset_constants.dart       # Constants related to assets
 │   │   ├── setting.dart
 │   │   └── ...
 │   │
-│   ├── data/                     # Data layer containing data sources and repositories
-│   │   ├── datasources/          # Data sources (e.g., API, local database)
-│   │   ├── models/               # Data models
-│   │   ├── repositories/         # Repositories for data access
+│   ├── data/                          # Data layer containing data sources and repositories
+│   │   ├── datasources/               # Data sources (e.g., API, local database)
+│   │   ├── models/                    # Data models
+│   │   ├── repositories/              # Repositories for data access
+│   │   ├── services/         
+│   │   │   ├── rest_api.dart          # Abstract definition for REST API service
+│   │   │   └── rest_api_impl.dart     # Implementation of REST API service
 │   │   └── ...
 │   │
 │   ├── domain/                   # Domain layer containing business logic
@@ -101,27 +120,28 @@ project_root/
 │   │
 │   ├── presentation/             # Presentation layer containing UI, BLoCs, and widgets
 │   │   ├── pages/                # Screen pages
-│   │   │   ├── home/
+│   │   │   ├── home/             # Home page related components
 │   │   │   │   ├── home_page.dart    # Main application page
 │   │   │   ├── login/
 │   │   │   │   ├── widgets/          # Widgets specific to login page
 │   │   │   │   │   ├── login_form.dart
 │   │   │   │   │   └── ...
 │   │   │   │   ├── login_page.dart
-│   │   │   ├── index.dart
+│   │   │   ├── index.dart        # Export file for pages
 │   │   │   └── ...
-│   │   ├── widgets/              # Reusable UI components
-│   │   │   ├── image_not_found.dart
-│   │   ├── viewmodels/            # View models for UI logic
-│   │   │   ├── single_sign_on_view_model.dart
-│   │   ├── blocs/                # BLoCs for state management
-│   │   ├── utils/                # Utility functions and classes
-│   │   │   ├── regex_validator.dart
-│   │   │   ├── format.dart
-│   │   ├── app.dart              # Main application widget
+│   │   ├── widgets/                   # Reusable UI components
+│   │   │   ├── image_not_found.dart   # Widget for displaying when image is not found
+│   │   ├── viewmodels/                # View models for UI logic
+│   │   │   ├── single_sign_on_view_model.dart  # ViewModel for single sign-on functionality
+│   │   ├── blocs/                     # BLoCs for state management
+│   │   ├── utils/                     # Utility functions and classes
+│   │   │   ├── regex_validator.dart   # Utility for regex validation
+│   │   │   ├── format.dart            # Utility for formatting
+│   │   ├── app.dart                   # Main application widget
 │   │   └── ...
 │   │
-│   ├── main.dart                 # Entry point of the application
+│   ├── injection_container.dart       # Container for dependency injection setup
+│   ├── main.dart                      # Entry point of the application
 │   └── ...
 │
 ├── test/                         # Test directory containing unit and widget tests
