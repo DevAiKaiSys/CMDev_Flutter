@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mystock_carch/presentation/pages/home/widgets/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key /*, this.name = '-', this.age = 0*/
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),*/
-          Center(
+          /*Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -61,7 +62,12 @@ class _HomePageState extends State<HomePage> {
             // Text(age.toString()),
           ],
         ),
+      ),*/
+          Image.asset('assets/images/logo.png'),
+      appBar: AppBar(
+        title: const Text('Stock Workshop'),
       ),
+      drawer: const CustomDrawer(),
     );
   }
 }
