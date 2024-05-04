@@ -12,5 +12,6 @@ class Route {
   static final Map<String, WidgetBuilder> _route = {
     home: (context) => const HomePage(),
     login: (context) => const LoginPage(),
+    dashboard: (context) => const DashBoardPage(),
   };
 }
