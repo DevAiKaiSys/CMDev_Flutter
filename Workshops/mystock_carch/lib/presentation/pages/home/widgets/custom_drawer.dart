@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mystock_carch/configs/route.dart' as custom_route;
@@ -98,9 +99,25 @@ class _CustomDrawerState extends State<CustomDrawer> {
               fontSize: 18.0,
             ),
           ),
-          leading: FaIcon(
+          leading:
+              /*FaIcon(
             item.icon,
             color: item.iconColor,
+          )*/
+              badges.Badge(
+            showBadge: item.icon == FontAwesomeIcons.inbox,
+            badgeContent: const Text(
+              '99',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
+            ),
+            badgeStyle: const badges.BadgeStyle(badgeColor: Colors.red),
+            child: FaIcon(
+              item.icon,
+              color: item.iconColor,
+            ),
           ),
           onTap: () {
             item.onTap(context);

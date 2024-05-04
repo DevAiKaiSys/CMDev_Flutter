@@ -33,9 +33,9 @@ Path: /data/data/(packagename)/shared_prefs/FlutterSharedPreferences.xml
 if cannot open checking
 
 - Project SDK
-  - File->Project Structure->Project Settings->Project->SDK:
+    - File->Project Structure->Project Settings->Project->SDK:
 - Facets
-  - File->Project Structure->Project Settings->Facets->+->Android
+    - File->Project Structure->Project Settings->Facets->+->Android
 - Adb (optional)
 
 ### Windows
@@ -47,6 +47,14 @@ In the roaming AppData directory
 ### Web
 
 LocalStorage
+
+# badges
+
+[badges](https://pub.dev/packages/badges)
+
+```
+flutter pub add badges
+```
 
 # run unit test
 
