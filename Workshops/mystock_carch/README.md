@@ -56,6 +56,14 @@ LocalStorage
 flutter pub add badges
 ```
 
+# text formatting
+
+[intl](https://pub.dev/packages/intl)
+
+```
+flutter pub add intl
+```
+
 # run unit test
 
 ```

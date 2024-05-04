@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mystock_carch/presentation/utils/format.dart';
 
 class ProductItem extends StatelessWidget {
   final double maxHeight;
@@ -7,35 +8,52 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          _buildImage(),
-          _buildInfo(),
-        ],
+    return GestureDetector(
+      onTap: () {
+        // todo
+        debugPrint('click product');
+      },
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            _buildImage(),
+            _buildInfo(),
+          ],
+        ),
       ),
     );
   }
 
-  Image _buildImage() {
+  _buildImage() {
     final height = maxHeight * 0.7;
     const productImage =
         'https://cdn-images-1.medium.com/max/280/1*X5PBTDQQ2Csztg3a6wofIQ@2x.png';
 
-    return Image.network(
-      productImage,
-      height: /*350*/ height,
+    // return Image.network(
+    //   productImage,
+    //   height: /*350*/ height,
+    // );
+    return Stack(
+      children: [
+        Image.network(
+          productImage,
+          height: height,
+          width: double.infinity,
+        ),
+        _buildOutofStock(),
+      ],
     );
   }
 
-  _buildInfo() => const Expanded(
+  Expanded _buildInfo() => Expanded(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Contrary to popular belief, Lorem Ipsum is not simply random text.',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -43,11 +61,42 @@ class ProductItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('\$4444'),
-                  Text('1234 pieces'),
+                  // Text('\$4444'),
+                  Text(
+                    '฿${formatCurrency.format(1111)}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  // Text('1234 pieces'),
+                  Text(
+                    '${formatNumber.format(9999)} pieces',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.deepOrangeAccent,
+                    ),
+                  ),
                 ],
               )
             ],
+          ),
+        ),
+      );
+
+  Positioned _buildOutofStock() => const Positioned(
+        top: 2,
+        right: 2,
+        child: Card(
+          color: Colors.amber,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            child: Text(
+              'out of stock',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
           ),
         ),
       );
