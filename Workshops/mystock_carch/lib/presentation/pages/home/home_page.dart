@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final Map<Object, Object> arguments =
+    /*final Map<Object, Object> arguments =
         (ModalRoute.of(context)?.settings.arguments) as Map<Object, Object>;
     final models = Map<String, Object>.from(arguments);
 
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
     }
     if (models['age'] is int) {
       age = models['age'] as int;
-    }
+    }*/
 
     return Scaffold(
       body:
@@ -57,8 +57,8 @@ class _HomePageState extends State<HomePage> {
             ),
             // Text(widget.name),
             // Text(widget.age.toString()),
-            Text(name),
-            Text(age.toString()),
+            // Text(name),
+            // Text(age.toString()),
           ],
         ),
       ),

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mystock_carch/configs/route.dart' as custom_route;
 import 'package:mystock_carch/configs/theme.dart' as custom_theme;
+import 'package:mystock_carch/constants/setting.dart';
 import 'package:mystock_carch/presentation/utils/regex_validator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -137,11 +139,17 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
           );*/
-          Navigator.pushReplacementNamed(
+          /*Navigator.pushReplacementNamed(
             context,
             custom_route.Route.home,
             arguments: {'name': 'aikaisys', 'age': 30},
-          );
+          );*/
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(Setting.tokenPref, 'myToken');
+          prefs.setString(Setting.usernamePref, username);
+
+          if (!mounted) return;
+          Navigator.pushReplacementNamed(context, custom_route.Route.home);
         } else {
           showAlertBar();
         }

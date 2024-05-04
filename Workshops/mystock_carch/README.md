@@ -14,6 +14,30 @@ flutter pub add font_awesome_flutter
 flutter pub add another_flushbar
 ```
 
+# data storage
+
+[shared_preferences](https://pub.dev/packages/shared_preferences)
+
+## checking data storage
+
+### Android
+
+View->Tool Windows->Device Explorer->(select device)->Files.
+
+Path: /data/data/(packagename)/shared_prefs/FlutterSharedPreferences.xml
+
+if cannot open checking
+
+- Project SDK
+  - File->Project Structure->Project Settings->Project->SDK:
+- Facets
+  - File->Project Structure->Project Settings->Facets->+->Android
+- Adb (optional)
+
+```
+flutter pub add shared_preferences
+```
+
 # run unit test
 
 ```
@@ -28,12 +52,13 @@ project_root/
 ├── lib/
 │   │
 │   ├── configs/
-│   │   ├── route.dart            
+│   │   ├── route.dart
 │   │   ├── theme.dart            # Configuration for app theme
 │   │   └── ...
 │   │
 │   ├── constants/                # Constants used throughout the app
 │   │   ├── asset_constants.dart  # Constants related to assets
+│   │   ├── setting.dart
 │   │   └── ...
 │   │
 │   ├── data/                     # Data layer containing data sources and repositories
