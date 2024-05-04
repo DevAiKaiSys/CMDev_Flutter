@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mystock_carch/configs/route.dart' as custom_route;
 import 'package:mystock_carch/presentation/pages/login/login_page.dart';
 
 class App extends StatelessWidget {
@@ -7,6 +8,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: custom_route.Route.getAll(),
       title: 'MyStock',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

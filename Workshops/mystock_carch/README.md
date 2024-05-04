@@ -28,6 +28,7 @@ project_root/
 ├── lib/
 │   │
 │   ├── configs/
+│   │   ├── route.dart            
 │   │   ├── theme.dart            # Configuration for app theme
 │   │   └── ...
 │   │
@@ -56,6 +57,7 @@ project_root/
 │   │   │   │   │   ├── login_form.dart
 │   │   │   │   │   └── ...
 │   │   │   │   ├── login_page.dart
+│   │   │   ├── index.dart
 │   │   │   └── ...
 │   │   ├── widgets/              # Reusable UI components
 │   │   ├── viewmodels/            # View models for UI logic
