@@ -1,8 +1,33 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mystock_carch/constants/api.dart';
 
 class DioInterceptors {
-  static final Dio _dio = Dio();
+  /*static final Dio _dio = Dio();*/
+  static final _dio = Dio()
+    ..interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          options.baseUrl = API.baseUrl;
+          options.connectTimeout = const Duration(seconds: 5);
+          options.receiveTimeout = const Duration(seconds: 3);
+          /*options.headers = {
+            // 'authorization': 'Bearer abcd',
+            'authorization': await SharedPreferences.getInstance(),
+          };*/
+          debugPrint(options.baseUrl + options.path);
+          return handler.next(options);
+        },
+        onResponse: (response, handler) {
+          return handler.next(response);
+        },
+        onError: (e, handler) {
+          // return handler.next(e);
+          DioException exception = e.copyWith(message: 'Network failed');
+          return handler.next(exception);
+        },
+      ),
+    );
 
   static Dio get dio => _dio;
 

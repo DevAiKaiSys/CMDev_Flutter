@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mystock_carch/data/datasources/product_remote.dart';
@@ -41,7 +42,8 @@ class _StockState extends State<Stock> {
           return Container(
             margin: const EdgeInsets.only(top: 22),
             alignment: Alignment.topCenter,
-            child: Text(snapshot.error.toString()),
+            child: /*Text(snapshot.error.toString())*/
+                Text((snapshot.error as DioException).message ?? "error?"),
           );
         }
         return const Center(
