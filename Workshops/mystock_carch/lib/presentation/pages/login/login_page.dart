@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mystock_carch/configs/theme.dart' as custom_theme;
+import 'package:mystock_carch/presentation/pages/login/widgets/single_sign_on.dart';
 
 import 'widgets/header.dart';
 import 'widgets/login_form.dart';
@@ -35,7 +36,8 @@ class LoginPage extends StatelessWidget {
               // Text('form'),
               LoginForm(),
               Text('forget password'),
-              Text('SSO'),
+              // Text('SSO'),
+              SingleSignOn(),
               Text('register'),
             ],
           ),
