@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mystock_carch/constants/api.dart';
+import 'package:mystock_carch/data/models/product.dart';
 import 'package:mystock_carch/presentation/utils/format.dart';
 import 'package:mystock_carch/presentation/widgets/image_not_found.dart';
 
 class ProductItem extends StatelessWidget {
   final double maxHeight;
+  final Product product;
 
-  const ProductItem({super.key, required this.maxHeight});
+  const ProductItem(
+      {super.key, required this.maxHeight, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +32,12 @@ class ProductItem extends StatelessWidget {
 
   _buildImage() {
     final height = maxHeight * 0.7;
-    const productImage =
+    /*const productImage =
         // 'https://cdn-images-1.medium.com/max/280/1*X5PBTDQQ2Csztg3a6wofIQ@2x.png';
-        '';
+        '';*/
+    final productImage = product.image;
 
-    const stock = 0;
+    /*const stock = 0;*/
 
     // return Image.network(
     //   productImage,
@@ -49,13 +54,19 @@ class ProductItem extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           height: height,
-          child: productImage.isNotEmpty
+          child: /*productImage.isNotEmpty
               ? Image.network(
                   productImage,
                 )
-              : const ImageNotFound(),
+              : const ImageNotFound()*/
+              productImage != null && productImage.isNotEmpty
+                  ? Image.network(
+                      '${API.imageUrl}/$productImage',
+                    )
+                  : const ImageNotFound(),
         ),
-        if (stock <= 0) _buildOutofStock(),
+        /*if (stock <= 0) _buildOutofStock(),*/
+        if (product.stock! <= 0) _buildOutofStock(),
       ],
     );
   }
@@ -67,8 +78,9 @@ class ProductItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Contrary to popular belief, Lorem Ipsum is not simply random text.',
+              Text(
+                /*'Contrary to popular belief, Lorem Ipsum is not simply random text.'*/
+                product.name!,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -77,14 +89,14 @@ class ProductItem extends StatelessWidget {
                 children: [
                   // Text('\$4444'),
                   Text(
-                    '฿${formatCurrency.format(1111)}',
+                    '฿${formatCurrency.format(/*1111*/ product.price)}',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   // Text('1234 pieces'),
                   Text(
-                    '${formatNumber.format(9999)} pieces',
+                    '${formatNumber.format(/*9999*/ product.stock)} pieces',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.deepOrangeAccent,

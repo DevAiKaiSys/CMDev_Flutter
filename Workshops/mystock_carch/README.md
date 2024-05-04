@@ -101,6 +101,7 @@ project_root/
 │   ├── constants/                     # Constants used throughout the app
 │   │   ├── asset_constants.dart       # Constants related to assets
 │   │   ├── setting.dart
+│   │   ├── api.dart
 │   │   └── ...
 │   │
 │   ├── data/                          # Data layer containing data sources and repositories

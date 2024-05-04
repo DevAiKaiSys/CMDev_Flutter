@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mystock_carch/data/datasources/post_remote.dart';
-import 'package:mystock_carch/data/models/post.dart';
+import 'package:mystock_carch/data/datasources/product_remote.dart';
+import 'package:mystock_carch/data/models/product.dart';
 import 'package:mystock_carch/presentation/pages/home/widgets/product_item.dart';
 
 class Stock extends StatefulWidget {
@@ -16,14 +16,14 @@ class _StockState extends State<Stock> {
 
   @override
   Widget build(BuildContext context) {
-    var posts = GetIt.instance<PostRemoteDataSource>();
+    var products = GetIt.instance<ProductRemoteDataSource>();
 
-    return FutureBuilder<List<Post>>(
-      future: posts.fetchPosts(0),
+    return FutureBuilder<List<Product>>(
+      future: products.getAllProduct(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<Post>? posts = snapshot.data;
-          if (posts == null || posts.isEmpty) {
+          List<Product>? products = snapshot.data;
+          if (products == null || products.isEmpty) {
             return Container(
               margin: const EdgeInsets.only(top: 22),
               alignment: Alignment.topCenter,
@@ -34,7 +34,7 @@ class _StockState extends State<Stock> {
             onRefresh: () async {
               setState(() {});
             },
-            child: _buildProductGridView(posts),
+            child: _buildProductGridView(products),
           );
         }
         if (snapshot.hasError) {
@@ -51,7 +51,7 @@ class _StockState extends State<Stock> {
     );
   }
 
-  GridView _buildProductGridView(List<Post> posts) {
+  GridView _buildProductGridView(List<Product> products) {
     return GridView.builder(
       padding: EdgeInsets.only(
         left: _spacing,
@@ -71,10 +71,11 @@ class _StockState extends State<Stock> {
       )*/
           LayoutBuilder(
         builder: (context, BoxConstraints constraints) {
-          return ProductItem(maxHeight: constraints.maxHeight);
+          return ProductItem(
+              maxHeight: constraints.maxHeight, product: products[index]);
         },
       ),
-      itemCount: posts.length,
+      itemCount: products.length,
     );
   }
 }
