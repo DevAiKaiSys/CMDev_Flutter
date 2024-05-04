@@ -18,6 +18,10 @@ flutter pub add another_flushbar
 
 [shared_preferences](https://pub.dev/packages/shared_preferences)
 
+```
+flutter pub add shared_preferences
+```
+
 ## checking data storage
 
 ### Android
@@ -34,9 +38,15 @@ if cannot open checking
   - File->Project Structure->Project Settings->Facets->+->Android
 - Adb (optional)
 
-```
-flutter pub add shared_preferences
-```
+### Windows
+
+In the roaming AppData directory
+
+%USER_PATH%/AppData/Roaming/(packagename)/(projectname)/shared_preferences.json
+
+### Web
+
+LocalStorage
 
 # run unit test
 
