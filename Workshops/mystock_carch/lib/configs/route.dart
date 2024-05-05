@@ -13,5 +13,6 @@ class Route {
     home: (context) => const HomePage(),
     login: (context) => const LoginPage(),
     dashboard: (context) => const DashBoardPage(),
+    management: (context) => const ManagementPage(),
   };
 }
