@@ -1,3 +1,7 @@
+# myignore
+dev.sqlite3
+images/
+
 # Logs
 logs
 *.log

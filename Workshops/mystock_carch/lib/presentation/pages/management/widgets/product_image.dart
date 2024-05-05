@@ -6,7 +6,9 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProductImage extends StatefulWidget {
-  const ProductImage({super.key});
+  final Function(File imageFile) callBack;
+
+  const ProductImage(this.callBack, {super.key});
 
   @override
   State<ProductImage> createState() => _ProductImageState();
@@ -124,6 +126,7 @@ class _ProductImageState extends State<ProductImage> {
         if (Platform.isWindows) {
           setState(() {
             _imageFile = File(file.path);
+            widget.callBack(_imageFile!);
           });
         } else {
           _cropImage(file.path);
@@ -160,6 +163,7 @@ class _ProductImageState extends State<ProductImage> {
       if (file != null) {
         setState(() {
           _imageFile = File(file.path); //Change to File
+          widget.callBack(_imageFile!);
         });
       }
     });
