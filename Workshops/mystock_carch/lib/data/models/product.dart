@@ -48,4 +48,9 @@ class Product {
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
       };
+
+  @override
+  String toString() {
+    return 'Product{id: $id, name: $name, image: $image, stock: $stock, price: $price, createdAt: $createdAt, updatedAt: $updatedAt}';
+  }
 }
