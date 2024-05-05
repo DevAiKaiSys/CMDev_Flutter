@@ -80,6 +80,14 @@ flutter pub add dio
 flutter pub add get_it
 ```
 
+# picking images
+
+[image_picker](https://pub.dev/packages/image_picker)
+
+```
+flutter pub add image_picker
+```
+
 # run unit test
 
 ```
