@@ -23,6 +23,8 @@ class _ManagementPageState extends State<ManagementPage> {
   final _form = GlobalKey<FormState>();
   File? _imageFile;
 
+  var productDatasource = GetIt.instance<ProductRemoteDataSource>();
+
   @override
   void initState() {
     _isEdit = false;
@@ -32,35 +34,44 @@ class _ManagementPageState extends State<ManagementPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Object? arguments = ModalRoute.of(context)?.settings.arguments;
+    if (arguments is Product) {
+      _isEdit = true;
+      _product = arguments;
+    }
+
     return Scaffold(
       appBar: /*AppBar(
         title: Text(_isEdit ? 'Edit Product' : 'Create Product'),
       )*/
           _buildAppBar(),
-      body: Form(
-        key: _form,
-        child: Padding(
-          padding: EdgeInsets.all(_spacing),
-          child: Column(
-            children: [
-              _buildNameInput(),
-              SizedBox(height: _spacing),
-              Row(
-                children: [
-                  Flexible(child: _buildPriceInput()),
-                  SizedBox(width: _spacing),
-                  Flexible(child: _buildStockInput()),
-                ],
-              ),
-              ProductImage(callBack),
-            ],
+      body: SingleChildScrollView(
+        child: Form(
+          key: _form,
+          child: Padding(
+            padding: EdgeInsets.all(_spacing),
+            child: Column(
+              children: [
+                _buildNameInput(),
+                SizedBox(height: _spacing),
+                Row(
+                  children: [
+                    Flexible(child: _buildPriceInput()),
+                    SizedBox(width: _spacing),
+                    Flexible(child: _buildStockInput()),
+                  ],
+                ),
+                ProductImage(callBack, _product.image),
+                const SizedBox(width: 80),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  callBack(File imageFile) {
+  callBack(File? imageFile) {
     _imageFile = imageFile;
   }
 
@@ -68,6 +79,7 @@ class _ManagementPageState extends State<ManagementPage> {
     return AppBar(
       title: Text(_isEdit ? 'Edit Product' : 'Create Product'),
       actions: [
+        if (_isEdit) _buildDeleteButoon(),
         TextButton(
           style: TextButton.styleFrom(foregroundColor: Colors.black),
           onPressed: () {
@@ -75,7 +87,13 @@ class _ManagementPageState extends State<ManagementPage> {
             /*debugPrint(_product.name);
             debugPrint('${_product.price}');
             debugPrint('${_product.stock}');*/
-            addProduct();
+            /*addProduct();*/
+            FocusScope.of(context).requestFocus(FocusNode()); // ปิด keyboard
+            if (_isEdit) {
+              editProduct();
+            } else {
+              addProduct();
+            }
           },
           child: const Text('submit'),
         )
@@ -156,5 +174,68 @@ class _ManagementPageState extends State<ManagementPage> {
       duration: const Duration(seconds: 3),
       flushbarStyle: FlushbarStyle.GROUNDED,
     ).show(context);
+  }
+
+  _buildDeleteButoon() => IconButton(
+        icon: const Icon(Icons.delete_outline),
+        onPressed: () {
+          showDialog<void>(
+            context: context,
+            builder: (BuildContext dialogContext) {
+              return AlertDialog(
+                title: const Text('Delete Product'),
+                content: const Text('Are you sure you want to delete?'),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text('cancel'),
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop(); // Dismiss alert dialog
+                    },
+                  ),
+                  TextButton(
+                    child: const Text(
+                      'ok',
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop(); // Dis
+                      deleteProduct(); // miss alert dialog
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      );
+
+  void deleteProduct() {
+    productDatasource.deleteProduct(_product.id!).then((result) {
+      Navigator.pop(context);
+      showAlertBar(result);
+    }).catchError((error) {
+      showAlertBar(
+        error.toString(),
+        icon: FontAwesomeIcons.circleXmark,
+        color: Colors.red,
+      );
+    });
+  }
+
+  void editProduct() {
+    productDatasource
+        .editProduct(_product, imageFile: _imageFile)
+        .then((result) {
+      Navigator.pop(context);
+      showAlertBar(result);
+    }).catchError((error) {
+      showAlertBar(
+        error.toString(),
+        icon: FontAwesomeIcons.circleXmark,
+        color: Colors.red,
+      );
+    });
   }
 }

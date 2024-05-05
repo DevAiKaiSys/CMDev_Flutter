@@ -88,8 +88,20 @@ class _StockState extends State<Stock> {
       )*/
           LayoutBuilder(
         builder: (context, BoxConstraints constraints) {
+          final product = products[index];
           return ProductItem(
-              maxHeight: constraints.maxHeight, product: products[index]);
+            maxHeight: constraints.maxHeight,
+            product: product,
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                custom_route.Route.management,
+                arguments: product,
+              ).then((value) {
+                setState(() {});
+              });
+            },
+          );
         },
       ),
       itemCount: products.length,

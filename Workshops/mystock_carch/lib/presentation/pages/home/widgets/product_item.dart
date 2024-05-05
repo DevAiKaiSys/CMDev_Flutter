@@ -8,16 +8,18 @@ class ProductItem extends StatelessWidget {
   final double maxHeight;
   final Product product;
 
+  final VoidCallback? onTap;
+
   const ProductItem(
-      {super.key, required this.maxHeight, required this.product});
+      {super.key, required this.maxHeight, required this.product, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // todo
+      onTap: /*() {
         debugPrint('click product');
-      },
+      }*/
+          onTap,
       child: Container(
         color: Colors.white,
         child: Column(

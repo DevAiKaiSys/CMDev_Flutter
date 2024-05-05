@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mystock_carch/constants/api.dart';
 
 class ProductImage extends StatefulWidget {
-  final Function(File imageFile) callBack;
+  final Function(File? imageFile) callBack;
+  final String? imageURL;
 
-  const ProductImage(this.callBack, {super.key});
+  const ProductImage(this.callBack, this.imageURL, {super.key});
 
   @override
   State<ProductImage> createState() => _ProductImageState();
@@ -17,6 +19,19 @@ class ProductImage extends StatefulWidget {
 class _ProductImageState extends State<ProductImage> {
   File? _imageFile;
   final ImagePicker _picker = ImagePicker();
+  String? _imageURL;
+
+  @override
+  void initState() {
+    _imageURL = widget.imageURL;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _imageFile?.delete();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +56,10 @@ class _ProductImageState extends State<ProductImage> {
       );
 
   _buildPreviewImage() {
-    if (_imageFile == null) {
+    /*if (_imageFile == null) {
+      return const SizedBox();
+    }*/
+    if ((_imageURL == null || _imageURL!.isEmpty) && _imageFile == null) {
       return const SizedBox();
     }
 
@@ -53,10 +71,18 @@ class _ProductImageState extends State<ProductImage> {
           child: child,
         );
 
-    return Stack(children: [
+    /*return Stack(children: [
       container(Image.file(_imageFile!)),
       _buildDeleteImageButton(),
-    ]);
+    ]);*/
+    return _imageURL != null
+        ? container(Image.network('${API.imageUrl}/$_imageURL'))
+        : Stack(
+            children: [
+              container(Image.file(_imageFile!)),
+              _buildDeleteImageButton(),
+            ],
+          );
   }
 
   _buildDeleteImageButton() => Positioned(
@@ -65,6 +91,7 @@ class _ProductImageState extends State<ProductImage> {
           onPressed: () {
             setState(() {
               _imageFile = null;
+              widget.callBack(null);
             });
           },
           icon: const Icon(
@@ -127,6 +154,7 @@ class _ProductImageState extends State<ProductImage> {
           setState(() {
             _imageFile = File(file.path);
             widget.callBack(_imageFile!);
+            _imageURL = null;
           });
         } else {
           _cropImage(file.path);
@@ -164,6 +192,7 @@ class _ProductImageState extends State<ProductImage> {
         setState(() {
           _imageFile = File(file.path); //Change to File
           widget.callBack(_imageFile!);
+          _imageURL = null;
         });
       }
     });
