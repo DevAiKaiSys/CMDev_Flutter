@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProductImage extends StatefulWidget {
@@ -117,8 +118,48 @@ class _ProductImageState extends State<ProductImage> {
     )
         .then((file) {
       if (file != null) {
-        setState(() {
+        /*setState(() {
           _imageFile = File(file.path);
+        });*/
+        if (Platform.isWindows) {
+          setState(() {
+            _imageFile = File(file.path);
+          });
+        } else {
+          _cropImage(file.path);
+        }
+      }
+    });
+  }
+
+  void _cropImage(String path) {
+    ImageCropper().cropImage(
+      sourcePath: path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    ).then((file) {
+      if (file != null) {
+        setState(() {
+          _imageFile = File(file.path); //Change to File
         });
       }
     });

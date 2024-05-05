@@ -88,6 +88,14 @@ flutter pub add get_it
 flutter pub add image_picker
 ```
 
+# image crop
+
+[image_cropper](https://pub.dev/packages/image_cropper)
+
+```
+flutter pub add image_cropper
+```
+
 # run unit test
 
 ```
