@@ -1,6 +1,7 @@
 import 'package:cm_state_demo/presentation/app_route.dart';
 import 'package:cm_state_demo/presentation/blocs/app_bloc_observer.dart';
 import 'package:cm_state_demo/presentation/blocs/counter_a_bloc/counter_a_bloc.dart';
+import 'package:cm_state_demo/presentation/blocs/counter_b_bloc/counter_b_bloc.dart';
 import 'package:cm_state_demo/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,11 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final counterABloc =
         BlocProvider<CounterABloc>(create: (context) => CounterABloc());
-    /*final counterBBloc =
-        BlocProvider<CounterBBloc>(create: (context) => CounterBBloc());*/
+    final counterBBloc =
+        BlocProvider<CounterBBloc>(create: (context) => CounterBBloc());
 
     return MultiBlocProvider(
-      providers: [counterABloc],
+      providers: [counterABloc, counterBBloc],
       child: MaterialApp(
         title: 'Flutter Demo',
         routes: AppRoute().getAll,
