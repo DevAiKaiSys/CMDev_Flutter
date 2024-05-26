@@ -1,9 +1,11 @@
+import 'package:cm_state_demo/presentation/blocs/app_bloc_observer.dart';
 import 'package:cm_state_demo/presentation/blocs/counter_a_bloc/counter_a_bloc.dart';
 import 'package:cm_state_demo/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  Bloc.observer = AppBlocObserver();
   runApp(const MyApp());
 }
 
