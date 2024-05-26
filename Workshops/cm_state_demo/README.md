@@ -2,6 +2,13 @@
 
 A new Flutter project.
 
+## Install
+
+```
+flutter pub add flutter_bloc
+flutter pub add equatable
+```
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
